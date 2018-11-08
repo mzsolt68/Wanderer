@@ -91,6 +91,7 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <None Include="README.md" />
+    <None Include="Tasks.md" />
     <None Include="Stories.md" />
   </ItemGroup>
   <ItemGroup>
