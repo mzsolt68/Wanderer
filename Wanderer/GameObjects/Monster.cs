@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 
 namespace Wanderer
@@ -18,6 +19,11 @@ namespace Wanderer
             CurrentHealthPoints = MaxHealthPoints;
             DefendPoints = level / 2 * dice;
             StrikePoints = level * dice;
+            Picture = new Image
+            {
+                Width = 72,
+                Height = 72
+            };
             Picture.Source = new BitmapImage(new Uri("../Images/skeleton.png", UriKind.Relative));
         }
     }

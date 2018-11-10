@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 
 namespace Wanderer
@@ -17,6 +18,12 @@ namespace Wanderer
             CurrentHealthPoints = MaxHealthPoints;
             DefendPoints = 2 * dice;
             StrikePoints = 5 * dice;
+            Picture = new Image
+            {
+                Width = 72,
+                Height = 72
+            };
+            SetDirection(HeroDirection.Down);
         }
 
         public void SetDirection(HeroDirection direction)
