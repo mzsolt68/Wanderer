@@ -18,6 +18,7 @@ namespace Wanderer.GameObjects
             CurrentHealthPoints = MaxHealthPoints;
             DefendPoints = 2 * dice;
             StrikePoints = 5 * dice;
+            Level = 1;
             Picture = new Image
             {
                 Width = 72,
