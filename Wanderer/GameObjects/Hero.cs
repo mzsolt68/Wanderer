@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 
-namespace Wanderer
+namespace Wanderer.GameObjects
 {
-    public enum HeroDirection : int { Left, Right, Up, Down}
+    public enum Direction : int { Left, Right, Up, Down}
 
     public class Hero : Character
     {
@@ -23,23 +23,23 @@ namespace Wanderer
                 Width = 72,
                 Height = 72
             };
-            SetDirection(HeroDirection.Down);
+            SetDirection(Direction.Down);
         }
 
-        public void SetDirection(HeroDirection direction)
+        public void SetDirection(Direction direction)
         {
             switch(direction)
             {
-                case HeroDirection.Left:
+                case Direction.Left:
                     Picture.Source = new BitmapImage(new Uri("../Images/hero-left.png", UriKind.Relative));
                     break;
-                case HeroDirection.Right:
+                case Direction.Right:
                     Picture.Source = new BitmapImage(new Uri("../Images/hero-right.png", UriKind.Relative));
                     break;
-                case HeroDirection.Up:
+                case Direction.Up:
                     Picture.Source = new BitmapImage(new Uri("../Images/hero-up.png", UriKind.Relative));
                     break;
-                case HeroDirection.Down:
+                case Direction.Down:
                     Picture.Source = new BitmapImage(new Uri("../Images/hero-down.png", UriKind.Relative));
                     break;
 
