@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Wanderer.GameObjects;
 
 namespace Wanderer
 {
@@ -20,9 +21,43 @@ namespace Wanderer
     /// </summary>
     public partial class MainWindow : Window
     {
+        Hero hero;
+        Monster monster;
+        Boss boss;
+        Game game;
+
         public MainWindow()
         {
             InitializeComponent();
+            game = new Game();
+            game.InitArea();
+            game.DrawArea(canvas);
+            hero = game.CreateHero();
+            game.DrawCharacter(hero);
+            monster = game.CreateMonster();
+            game.DrawCharacter(monster);
+            boss = game.CreateBoss();
+            game.DrawCharacter(boss);
         }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch(e.Key)
+            {
+                case Key.Up:
+                    game.MoveHero(hero, Direction.Up);
+                    break;
+                case Key.Down:
+                    game.MoveHero(hero, Direction.Down);
+                    break;
+                case Key.Left:
+                    game.MoveHero(hero, Direction.Left);
+                    break;
+                case Key.Right:
+                    game.MoveHero(hero, Direction.Right);
+                    break;
+            }
+        }
+
     }
 }

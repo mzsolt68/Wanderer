@@ -55,6 +55,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="GameObjects\Boss.cs" />
+    <Compile Include="GameObjects\Game.cs" />
+    <Compile Include="GameObjects\Monster.cs" />
+    <Compile Include="GameObjects\Tile.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -63,6 +67,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DrawHelper.cs" />
+    <Compile Include="GameObjects\Character.cs" />
+    <Compile Include="GameObjects\Hero.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -98,16 +105,32 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\boss.png" />
+    <Resource Include="Images\boss.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\floor-map.png" />
-    <Resource Include="Images\floor.png" />
-    <Resource Include="Images\hero-down.png" />
-    <Resource Include="Images\hero-left.png" />
+    <Resource Include="Images\floor.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\hero-down.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\hero-left.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\hero-map.png" />
-    <Resource Include="Images\hero-right.png" />
-    <Resource Include="Images\hero-up.png" />
-    <Resource Include="Images\skeleton.png" />
-    <Resource Include="Images\wall.png" />
+    <Resource Include="Images\hero-right.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\hero-up.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\skeleton.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\wall.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\gif\boss.gif" />
