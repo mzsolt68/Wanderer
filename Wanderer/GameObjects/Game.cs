@@ -79,32 +79,40 @@ namespace Wanderer.GameObjects
                     hero.SetDirection(direction);
                     if (hero.PositionY > 0 && Area[hero.PositionX, hero.PositionY - 1].Type == TileType.Floor)
                     {
+                        Area[hero.PositionX, hero.PositionY].IsOccupied = false;
                         hero.PositionY--;
                         DrawCharacter(hero);
+                        Area[hero.PositionX, hero.PositionY].IsOccupied = true;
                     }
                     break;
                 case Direction.Down:
                     hero.SetDirection(direction);
                     if (hero.PositionY < 9 && Area[hero.PositionX, hero.PositionY + 1].Type == TileType.Floor)
                     {
+                        Area[hero.PositionX, hero.PositionY].IsOccupied = false;
                         hero.PositionY++;
                         DrawCharacter(hero);
+                        Area[hero.PositionX, hero.PositionY].IsOccupied = true;
                     }
                     break;
                 case Direction.Left:
                     hero.SetDirection(direction);
                     if (hero.PositionX > 0 && Area[hero.PositionX - 1, hero.PositionY].Type == TileType.Floor)
                     {
+                        Area[hero.PositionX, hero.PositionY].IsOccupied = false;
                         hero.PositionX--;
                         DrawCharacter(hero);
+                        Area[hero.PositionX, hero.PositionY].IsOccupied = true;
                     }
                     break;
                 case Direction.Right:
                     hero.SetDirection(direction);
                     if (hero.PositionX < 9 && Area[hero.PositionX + 1, hero.PositionY].Type == TileType.Floor)
                     {
+                        Area[hero.PositionX, hero.PositionY].IsOccupied = false;
                         hero.PositionX++;
                         DrawCharacter(hero);
+                        Area[hero.PositionX, hero.PositionY].IsOccupied = true;
                     }
                     break;
             }
@@ -113,11 +121,38 @@ namespace Wanderer.GameObjects
         public Hero CreateHero()
         {
             Hero h = new Hero(random.Next(1, 7));
-
+            SetCoord(h);
             return h;
         }
 
+        public Monster CreateMonster()
+        {
+            Monster m = new Monster(random.Next(1, 7), 1, false);
+            SetCoord(m);
+            return m;
+        }
 
+        public Boss CreateBoss()
+        {
+            Boss b = new Boss(random.Next(1, 7), 1);
+            SetCoord(b);
+            return b;
+        }
 
+        private void SetCoord(Character character)
+        {
+            int x, y;
+            do
+            {
+                do
+                {
+                    x = random.Next(0, 10);
+                    y = random.Next(0, 10);
+                } while (Area[x, y].Type != TileType.Floor);
+            } while (Area[x, y].IsOccupied);
+            Area[x, y].IsOccupied = true;
+            character.PositionX = x;
+            character.PositionY = y;
+        }
     }
 }
