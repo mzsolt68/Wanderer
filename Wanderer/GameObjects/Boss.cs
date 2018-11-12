@@ -10,6 +10,10 @@ namespace Wanderer.GameObjects
 {
     public class Boss : Character
     {
+        public override int CurrentHealthPoints { get; set; }
+        public override int DefendPoints { get; set; }
+        public override int StrikePoints { get; set; }
+
         public Boss(int dice, int level)
         {
             Level = level;

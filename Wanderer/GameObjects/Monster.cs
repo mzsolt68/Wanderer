@@ -10,6 +10,10 @@ namespace Wanderer.GameObjects
 {
     public class Monster : Character
     {
+        public override int CurrentHealthPoints { get; set; }
+        public override int DefendPoints { get; set; }
+        public override int StrikePoints { get; set; }
+
         public bool HasTheKey { get; private set; }
 
         public Monster(int dice, int level, bool hasthekey)
