@@ -33,6 +33,7 @@ namespace Wanderer
             game.InitArea();
             game.DrawArea(canvas);
             hero = game.CreateHero();
+            baseGrid.DataContext = hero;
             game.DrawCharacter(hero);
             monster = game.CreateMonster();
             game.DrawCharacter(monster);
