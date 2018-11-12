@@ -17,12 +17,5 @@ namespace Wanderer.GameObjects
         public int PositionX { get; set; }
         public int PositionY { get; set; }
         public Image Picture { get; set; }
-
-        public void LevelUp(int dice)
-        {
-            MaxHealthPoints += dice;
-            DefendPoints += dice;
-            StrikePoints += dice;
-        }
     }
 }

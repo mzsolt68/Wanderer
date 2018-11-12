@@ -67,7 +67,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DrawHelper.cs" />
     <Compile Include="GameObjects\Character.cs" />
     <Compile Include="GameObjects\Hero.cs" />
     <Compile Include="MainWindow.xaml.cs">
