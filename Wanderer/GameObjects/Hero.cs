@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 
@@ -10,14 +11,52 @@ namespace Wanderer.GameObjects
 {
     public enum Direction : int { Left, Right, Up, Down}
 
-    public class Hero : Character
+    public class Hero : Character, INotifyPropertyChanged
     {
-        public Hero(int dice)
+        private int _currhealthpts;
+        private int _defpts;
+        private int _strpts;
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public override int CurrentHealthPoints
         {
-            MaxHealthPoints = 20 + 3 * dice;
-            CurrentHealthPoints = MaxHealthPoints;
-            DefendPoints = 2 * dice;
-            StrikePoints = 5 * dice;
+            get { return _currhealthpts; }
+            set
+            {
+                if (_currhealthpts != value)
+                {
+                    _currhealthpts = value;
+                    OnPropertyChanged("CurrentHealthPoints");
+                }
+            }
+        }
+        public override int DefendPoints
+        {
+            get { return _defpts; }
+            set
+            {
+                if (_defpts != value)
+                {
+                    _defpts = value;
+                    OnPropertyChanged("DefendPoints");
+                }
+            }
+        }
+        public override int StrikePoints
+        {
+            get { return _strpts; }
+            set
+            {
+                if (_strpts != value)
+                {
+                    _strpts = value;
+                    OnPropertyChanged("StrikePoints");
+                }
+            }
+        }
+
+        public Hero()
+        {
             Level = 1;
             Picture = new Image
             {
@@ -25,6 +64,16 @@ namespace Wanderer.GameObjects
                 Height = 72
             };
             SetDirection(Direction.Down);
+        }
+
+        void OnPropertyChanged(string propertyName)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null)
+            {
+                handler(this, new PropertyChangedEventArgs(propertyName));
+            }
+
         }
 
         public void SetDirection(Direction direction)
@@ -50,8 +99,8 @@ namespace Wanderer.GameObjects
         public void LevelUp(int dice)
         {
             MaxHealthPoints += dice;
-            DefendPoints += dice;
-            StrikePoints += dice;
+            _defpts += dice;
+            _strpts += dice;
         }
     }
 }

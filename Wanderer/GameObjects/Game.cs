@@ -120,7 +120,12 @@ namespace Wanderer.GameObjects
 
         public Hero CreateHero()
         {
-            Hero h = new Hero(random.Next(1, 7));
+            Hero h = new Hero();
+            int dice = random.Next(1, 7);
+            h.MaxHealthPoints = 20 + 3 * dice;
+            h. CurrentHealthPoints = h.MaxHealthPoints;
+            h.DefendPoints = 2 * dice;
+            h.StrikePoints = 5 * dice;
             SetCoord(h);
             return h;
         }
