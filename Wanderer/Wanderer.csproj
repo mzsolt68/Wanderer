@@ -59,6 +59,7 @@
     <Compile Include="GameObjects\Game.cs" />
     <Compile Include="GameObjects\Monster.cs" />
     <Compile Include="GameObjects\Tile.cs" />
+    <Compile Include="ViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

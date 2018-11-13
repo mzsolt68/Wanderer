@@ -33,12 +33,16 @@ namespace Wanderer
             game.InitArea();
             game.DrawArea(canvas);
             hero = game.CreateHero();
-            baseGrid.DataContext = hero;
+            //baseGrid.DataContext = hero;
             game.DrawCharacter(hero);
             monster = game.CreateMonster();
             game.DrawCharacter(monster);
             boss = game.CreateBoss();
             game.DrawCharacter(boss);
+            ViewModel m = new ViewModel();
+            m.Hero = hero;
+            m.Enemy = boss;
+            baseGrid.DataContext = m;
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
