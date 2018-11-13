@@ -1,12 +1,12 @@
-﻿<Window x:Class="Wanderer.MainWindow"
+﻿<Window x:Name="mainWindow" x:Class="Wanderer.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wanderer"
         mc:Ignorable="d"
-        Title="MainWindow" Height="835" Width="735" KeyDown="Window_KeyDown">
-    <Grid x:Name="baseGrid" ShowGridLines="True">
+        Title="{Binding Game.GameLevel, StringFormat='Wanderer - Level: {0}'}" Height="835" Width="735" KeyDown="Window_KeyDown">
+    <Grid x:Name="baseGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="720"/>
             <RowDefinition Height="40"/>

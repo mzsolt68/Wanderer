@@ -38,7 +38,8 @@ namespace Wanderer
             ViewModel m = new ViewModel();
             m.Hero = hero;
             m.Enemy = boss;
-            baseGrid.DataContext = m;
+            m.Game = game;
+            mainWindow.DataContext = m;
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)

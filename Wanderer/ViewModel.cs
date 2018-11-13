@@ -11,5 +11,6 @@ namespace Wanderer
     {
         public Hero Hero { get; set; }
         public Character Enemy { get; set; }
+        public Game Game { get; set; }
     }
 }
