@@ -19,5 +19,6 @@ namespace Wanderer.GameObjects
         public int PositionY { get; set; }
         public Image Picture { get; set; }
 
+        public abstract void OnPropertyChanged(string propertyName);
     }
 }
