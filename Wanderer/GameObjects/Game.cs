@@ -26,12 +26,14 @@ namespace Wanderer.GameObjects
         };
         private static Random random;
         public int GameLevel { get; private set; }
+        public List<Monster> Monsters;
 
         public Game()
         {
             Area = new Tile[10, 10];
             GameLevel = 1;
             random = new Random();
+            Monsters = new List<Monster>();
         }
 
         public void InitArea()
@@ -127,20 +129,27 @@ namespace Wanderer.GameObjects
             h.DefendPoints = 2 * dice;
             h.StrikePoints = 5 * dice;
             SetCoord(h);
+            DrawCharacter(h);
             return h;
         }
 
-        public Monster CreateMonster()
+        public void CreateMonsters()
         {
-            Monster m = new Monster();
-            int dice = random.Next(1, 7);
-            m.Level = GameLevel;
-            m.MaxHealthPoints = 2 * GameLevel * dice;
-            m.CurrentHealthPoints = m.MaxHealthPoints;
-            m.DefendPoints = GameLevel / 2 * dice;
-            m.StrikePoints = GameLevel * dice;
-            SetCoord(m);
-            return m;
+            int nrOfMonsters = random.Next(2, 6);
+            do
+            {
+                Monster m = new Monster();
+                int dice = random.Next(1, 7);
+                m.Level = GameLevel;
+                m.MaxHealthPoints = 2 * GameLevel * dice;
+                m.CurrentHealthPoints = m.MaxHealthPoints;
+                m.DefendPoints = GameLevel / 2 * dice;
+                m.StrikePoints = GameLevel * dice;
+                SetCoord(m);
+                DrawCharacter(m);
+                Monsters.Add(m);
+                nrOfMonsters--;
+            } while (nrOfMonsters > 0);
         }
 
         public Boss CreateBoss()
@@ -153,6 +162,7 @@ namespace Wanderer.GameObjects
             b.DefendPoints = GameLevel / 2 * dice + dice / 2;
             b.StrikePoints = GameLevel * dice + GameLevel;
             SetCoord(b);
+            DrawCharacter(b);
             return b;
         }
 

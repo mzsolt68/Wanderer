@@ -33,11 +33,8 @@ namespace Wanderer
             game.InitArea();
             game.DrawArea(canvas);
             hero = game.CreateHero();
-            game.DrawCharacter(hero);
-            monster = game.CreateMonster();
-            game.DrawCharacter(monster);
+            game.CreateMonsters();
             boss = game.CreateBoss();
-            game.DrawCharacter(boss);
             ViewModel m = new ViewModel();
             m.Hero = hero;
             m.Enemy = boss;
