@@ -132,14 +132,26 @@ namespace Wanderer.GameObjects
 
         public Monster CreateMonster()
         {
-            Monster m = new Monster(random.Next(1, 7), 1, false);
+            Monster m = new Monster();
+            int dice = random.Next(1, 7);
+            m.Level = GameLevel;
+            m.MaxHealthPoints = 2 * GameLevel * dice;
+            m.CurrentHealthPoints = m.MaxHealthPoints;
+            m.DefendPoints = GameLevel / 2 * dice;
+            m.StrikePoints = GameLevel * dice;
             SetCoord(m);
             return m;
         }
 
         public Boss CreateBoss()
         {
-            Boss b = new Boss(random.Next(1, 7), 1);
+            Boss b = new Boss();
+            int dice = random.Next(1, 7);
+            b.Level = GameLevel;
+            b.MaxHealthPoints = 2 * GameLevel * dice + dice;
+            b.CurrentHealthPoints = b.MaxHealthPoints;
+            b.DefendPoints = GameLevel / 2 * dice + dice / 2;
+            b.StrikePoints = GameLevel * dice + GameLevel;
             SetCoord(b);
             return b;
         }
