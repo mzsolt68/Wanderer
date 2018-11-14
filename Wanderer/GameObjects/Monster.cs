@@ -53,7 +53,7 @@ namespace Wanderer.GameObjects
             }
         }
 
-        public bool HasTheKey { get; private set; }
+        public bool HasTheKey { get; set; }
 
         public Monster()
         {

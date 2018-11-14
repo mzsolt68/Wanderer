@@ -22,7 +22,6 @@ namespace Wanderer
     public partial class MainWindow : Window
     {
         Hero hero;
-        Monster monster;
         Boss boss;
         Game game;
 
@@ -30,16 +29,9 @@ namespace Wanderer
         {
             InitializeComponent();
             game = new Game();
-            game.InitArea();
             game.DrawArea(canvas);
-            hero = game.CreateHero();
-            game.CreateMonsters();
-            boss = game.CreateBoss();
-            ViewModel m = new ViewModel();
-            m.Hero = hero;
-            m.Enemy = boss;
-            m.Game = game;
-            mainWindow.DataContext = m;
+            game.CreateCharacters();
+            mainWindow.DataContext = game.CharacterStatModel;
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
@@ -47,16 +39,16 @@ namespace Wanderer
             switch(e.Key)
             {
                 case Key.Up:
-                    game.MoveHero(hero, Direction.Up);
+                    game.MoveHero(game.Hero, Direction.Up);
                     break;
                 case Key.Down:
-                    game.MoveHero(hero, Direction.Down);
+                    game.MoveHero(game.Hero, Direction.Down);
                     break;
                 case Key.Left:
-                    game.MoveHero(hero, Direction.Left);
+                    game.MoveHero(game.Hero, Direction.Left);
                     break;
                 case Key.Right:
-                    game.MoveHero(hero, Direction.Right);
+                    game.MoveHero(game.Hero, Direction.Right);
                     break;
             }
         }

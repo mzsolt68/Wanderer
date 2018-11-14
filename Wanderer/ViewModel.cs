@@ -7,7 +7,7 @@ using Wanderer.GameObjects;
 
 namespace Wanderer
 {
-    class ViewModel
+    public class ViewModel
     {
         public Hero Hero { get; set; }
         public Character Enemy { get; set; }
