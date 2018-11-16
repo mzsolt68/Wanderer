@@ -27,7 +27,7 @@ namespace Wanderer.GameObjects
         private static Random random;
         public int GameLevel { get; private set; }
         public Hero Hero;
-        public List<Character> Enemies;
+        public List<Enemy> Enemies;
         public ViewModel CharacterStatModel;
 
         public Game()
@@ -35,7 +35,7 @@ namespace Wanderer.GameObjects
             Area = new Tile[10, 10];
             GameLevel = 1;
             random = new Random();
-            Enemies = new List<Character>();
+            Enemies = new List<Enemy>();
             CharacterStatModel = new ViewModel();
             CharacterStatModel.Game = this;
             InitArea();

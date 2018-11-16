@@ -9,7 +9,7 @@ using System.Windows.Media.Imaging;
 
 namespace Wanderer.GameObjects
 {
-    public class Boss : Character
+    public class Boss : Enemy
     {
         private int _currhealthpts;
         private int _defpts;
