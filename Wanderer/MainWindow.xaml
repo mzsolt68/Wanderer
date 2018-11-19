@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wanderer"
         mc:Ignorable="d"
-        Title="{Binding Game.GameLevel, StringFormat='Wanderer - Level: {0}'}" Height="835" Width="735" KeyDown="Window_KeyDown">
+        Title="{Binding Game.GameLevel, StringFormat='Wanderer - Level: {0}'}" Height="835" Width="735" KeyDown="Window_KeyDown" WindowStartupLocation="CenterScreen">
     <Grid x:Name="baseGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="720"/>

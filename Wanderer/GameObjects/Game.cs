@@ -87,96 +87,35 @@ namespace Wanderer.GameObjects
                     hero.SetDirection(direction);
                     if (hero.PositionY > 0 && Area[hero.PositionX, hero.PositionY - 1].Type == TileType.Floor)
                     {
-                        if (CharacterStatModel.Enemy == null)
-                        {
-                            Area[hero.PositionX, hero.PositionY].IsOccupied = false;
-                        }
-                        else
-                        {
-                            CharacterStatModel.Enemy = null;
-                        }
+                        LeaveCell(hero);
                         hero.PositionY--;
-                        DrawCharacter(hero);
-                        if (Area[hero.PositionX, hero.PositionY].IsOccupied)
-                        {
-                            CharacterStatModel.Enemy = GetEnemyOnPosition(hero.PositionX, hero.PositionY);
-                        }
-                        else
-                        {
-                            Area[hero.PositionX, hero.PositionY].IsOccupied = true;
-                        }
+                        EnterCell(hero);
                     }
                     break;
                 case Direction.Down:
                     hero.SetDirection(direction);
                     if (hero.PositionY < 9 && Area[hero.PositionX, hero.PositionY + 1].Type == TileType.Floor)
                     {
-                        if (CharacterStatModel.Enemy == null)
-                        {
-                            Area[hero.PositionX, hero.PositionY].IsOccupied = false;
-                        }
-                        else
-                        {
-                            CharacterStatModel.Enemy = null;
-                        }
+                        LeaveCell(hero);
                         hero.PositionY++;
-                        DrawCharacter(hero);
-                        if (Area[hero.PositionX, hero.PositionY].IsOccupied)
-                        {
-                            CharacterStatModel.Enemy = GetEnemyOnPosition(hero.PositionX, hero.PositionY);
-                        }
-                        else
-                        {
-                            Area[hero.PositionX, hero.PositionY].IsOccupied = true;
-                        }
+                        EnterCell(hero);
                     }
                     break;
                 case Direction.Left:
                     hero.SetDirection(direction);
                     if (hero.PositionX > 0 && Area[hero.PositionX - 1, hero.PositionY].Type == TileType.Floor)
                     {
-                        if (CharacterStatModel.Enemy == null)
-                        {
-                            Area[hero.PositionX, hero.PositionY].IsOccupied = false;
-                        }
-                        else
-                        {
-                            CharacterStatModel.Enemy = null;
-                        }
+                        LeaveCell(hero);
                         hero.PositionX--;
-                        DrawCharacter(hero);
-                        if (Area[hero.PositionX, hero.PositionY].IsOccupied)
-                        {
-                            CharacterStatModel.Enemy = GetEnemyOnPosition(hero.PositionX, hero.PositionY);
-                        }
-                        else
-                        {
-                            Area[hero.PositionX, hero.PositionY].IsOccupied = true;
-                        }
-                    }
+                        EnterCell(hero);                    }
                     break;
                 case Direction.Right:
                     hero.SetDirection(direction);
                     if (hero.PositionX < 9 && Area[hero.PositionX + 1, hero.PositionY].Type == TileType.Floor)
                     {
-                        if (CharacterStatModel.Enemy == null)
-                        {
-                            Area[hero.PositionX, hero.PositionY].IsOccupied = false;
-                        }
-                        else
-                        {
-                            CharacterStatModel.Enemy = null;
-                        }
+                        LeaveCell(hero);
                         hero.PositionX++;
-                        DrawCharacter(hero);
-                        if (Area[hero.PositionX, hero.PositionY].IsOccupied)
-                        {
-                            CharacterStatModel.Enemy = GetEnemyOnPosition(hero.PositionX, hero.PositionY);
-                        }
-                        else
-                        {
-                            Area[hero.PositionX, hero.PositionY].IsOccupied = true;
-                        }
+                        EnterCell(hero);
                     }
                     break;
             }
@@ -264,6 +203,31 @@ namespace Wanderer.GameObjects
                 }
             }
             return null;
+        }
+
+        private void LeaveCell(Hero hero)
+        {
+            if (CharacterStatModel.Enemy == null)
+            {
+                Area[hero.PositionX, hero.PositionY].IsOccupied = false;
+            }
+            else
+            {
+                CharacterStatModel.Enemy = null;
+            }
+        }
+
+        private void EnterCell(Hero hero)
+        {
+            DrawCharacter(hero);
+            if (Area[hero.PositionX, hero.PositionY].IsOccupied)
+            {
+                CharacterStatModel.Enemy = GetEnemyOnPosition(hero.PositionX, hero.PositionY);
+            }
+            else
+            {
+                Area[hero.PositionX, hero.PositionY].IsOccupied = true;
+            }
         }
     }
 }
