@@ -29,6 +29,7 @@ namespace Wanderer.GameObjects
         public Hero Hero;
         public List<Enemy> Enemies;
         public ViewModel CharacterStatModel;
+        private int[] _monsterLevels = {0, 0, 2, 1, 0, 0, 1, 0, 1, 1 };
 
         public Game()
         {
@@ -209,11 +210,11 @@ namespace Wanderer.GameObjects
             {
                 Monster m = new Monster();
                 dice = random.Next(1, 7);
-                m.Level = GameLevel;
-                m.MaxHealthPoints = 2 * GameLevel * dice;
+                m.Level = GameLevel + _monsterLevels[random.Next(0, 10)];
+                m.MaxHealthPoints = 2 * m.Level * dice;
                 m.CurrentHealthPoints = m.MaxHealthPoints;
-                m.DefendPoints = GameLevel * dice / 2;
-                m.StrikePoints = GameLevel * dice;
+                m.DefendPoints = m.Level * dice / 2;
+                m.StrikePoints = m.Level * dice;
                 SetCoord(m);
                 DrawCharacter(m);
                 Enemies.Add(m);
@@ -227,11 +228,11 @@ namespace Wanderer.GameObjects
         {
             Boss b = new Boss();
             int dice = random.Next(1, 7);
-            b.Level = GameLevel;
-            b.MaxHealthPoints = 2 * GameLevel * dice + dice;
+            b.Level = GameLevel + _monsterLevels[random.Next(0, 10)];
+            b.MaxHealthPoints = 2 * b.Level * dice + dice;
             b.CurrentHealthPoints = b.MaxHealthPoints;
-            b.DefendPoints = GameLevel / 2 * dice + dice / 2;
-            b.StrikePoints = GameLevel * dice + GameLevel;
+            b.DefendPoints = b.Level / 2 * dice + dice / 2;
+            b.StrikePoints = b.Level * dice + b.Level;
             SetCoord(b);
             DrawCharacter(b);
             Enemies.Add(b);
