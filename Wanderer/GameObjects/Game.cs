@@ -134,6 +134,23 @@ namespace Wanderer.GameObjects
             //a másik karakter HP-ja csökken SP-DP értékkel.
             //Ha a védekező HP-je nulla lesz, akkor meghal és eltúnik.
             //Ha a támadó Hero volt, akkor a sikeres támadás után szintet lép.
+            if (Area[attacker.PositionX, attacker.PositionY].IsOccupied)
+            {
+                int dice = random.Next(1, 7);
+                int strikeValue = dice * 2 + attacker.StrikePoints;
+                Enemy enemy = CharacterStatModel.Enemy;
+                if(strikeValue > enemy.DefendPoints)
+                {
+                    enemy.CurrentHealthPoints = enemy.CurrentHealthPoints - (strikeValue - enemy.DefendPoints);
+                    if(enemy.CurrentHealthPoints <= 0)
+                    {
+                        Enemies.Remove(enemy);
+                        _canvas.Children.Remove(enemy.Picture);
+                        CharacterStatModel.Enemy = null;
+                        Hero.LevelUp(dice);
+                    }
+                }
+            }
         }
 
         private void CreateHero()
@@ -204,9 +221,9 @@ namespace Wanderer.GameObjects
             character.PositionY = y;
         }
 
-        private Character GetEnemyOnPosition(int x, int y)
+        private Enemy GetEnemyOnPosition(int x, int y)
         {
-            foreach (Character enemy in Enemies)
+            foreach (Enemy enemy in Enemies)
             {
                 if(enemy.PositionX == x && enemy.PositionY == y)
                 {
