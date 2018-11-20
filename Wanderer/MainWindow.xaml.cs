@@ -21,8 +21,6 @@ namespace Wanderer
     /// </summary>
     public partial class MainWindow : Window
     {
-        Hero hero;
-        Boss boss;
         Game game;
 
         public MainWindow()
@@ -49,6 +47,9 @@ namespace Wanderer
                     break;
                 case Key.Right:
                     game.MoveHero(game.Hero, Direction.Right);
+                    break;
+                case Key.Space:
+                    game.StartBattle(game.Hero);
                     break;
             }
         }

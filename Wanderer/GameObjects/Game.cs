@@ -73,8 +73,6 @@ namespace Wanderer.GameObjects
 
         public void DrawCharacter(Character character)
         {
-            _canvas.Children.Remove(character.Picture);
-            _canvas.Children.Add(character.Picture);
             Canvas.SetLeft(character.Picture, character.PositionX * 72);
             Canvas.SetTop(character.Picture, character.PositionY * 72);
         }
@@ -123,9 +121,19 @@ namespace Wanderer.GameObjects
 
         public void CreateCharacters()
         {
-            CreateHero();
             CreateMonsters();
             CreateBoss();
+            CreateHero();
+        }
+
+        public void StartBattle(Character attacker)
+        {
+            //Ellenőrizni, hogy van-e másik karakter a mezőn
+            //Strike point számolás
+            //Ha a strike point nagyobb, mint a másik karakter defend pontja, akkor
+            //a másik karakter HP-ja csökken SP-DP értékkel.
+            //Ha a védekező HP-je nulla lesz, akkor meghal és eltúnik.
+            //Ha a támadó Hero volt, akkor a sikeres támadás után szintet lép.
         }
 
         private void CreateHero()
@@ -137,6 +145,7 @@ namespace Wanderer.GameObjects
             Hero.DefendPoints = 2 * dice;
             Hero.StrikePoints = 5 * dice;
             SetCoord(Hero);
+            _canvas.Children.Add(Hero.Picture);
             DrawCharacter(Hero);
             CharacterStatModel.Hero = Hero;
         }
@@ -155,6 +164,7 @@ namespace Wanderer.GameObjects
                 m.DefendPoints = m.Level * dice / 2;
                 m.StrikePoints = m.Level * dice;
                 SetCoord(m);
+                _canvas.Children.Add(m.Picture);
                 DrawCharacter(m);
                 Enemies.Add(m);
                 nrOfMonsters--;
@@ -170,9 +180,10 @@ namespace Wanderer.GameObjects
             b.Level = GameLevel + _monsterLevels[random.Next(0, 10)];
             b.MaxHealthPoints = 2 * b.Level * dice + dice;
             b.CurrentHealthPoints = b.MaxHealthPoints;
-            b.DefendPoints = b.Level / 2 * dice + dice / 2;
+            b.DefendPoints = (int)(b.Level / 2.0 * dice + dice / 2.0);
             b.StrikePoints = b.Level * dice + b.Level;
             SetCoord(b);
+            _canvas.Children.Add(b.Picture);
             DrawCharacter(b);
             Enemies.Add(b);
         }
@@ -205,28 +216,34 @@ namespace Wanderer.GameObjects
             return null;
         }
 
-        private void LeaveCell(Hero hero)
+        private void LeaveCell(Character character)
         {
-            if (CharacterStatModel.Enemy == null)
+            if (character.GetType().Equals(typeof(Hero)))
             {
-                Area[hero.PositionX, hero.PositionY].IsOccupied = false;
-            }
-            else
-            {
-                CharacterStatModel.Enemy = null;
+                if (CharacterStatModel.Enemy == null)
+                {
+                    Area[character.PositionX, character.PositionY].IsOccupied = false;
+                }
+                else
+                {
+                    CharacterStatModel.Enemy = null;
+                }
             }
         }
 
-        private void EnterCell(Hero hero)
+        private void EnterCell(Character character)
         {
-            DrawCharacter(hero);
-            if (Area[hero.PositionX, hero.PositionY].IsOccupied)
+            DrawCharacter(character);
+            if (character.GetType().Equals(typeof(Hero)))
             {
-                CharacterStatModel.Enemy = GetEnemyOnPosition(hero.PositionX, hero.PositionY);
-            }
-            else
-            {
-                Area[hero.PositionX, hero.PositionY].IsOccupied = true;
+                if (Area[character.PositionX, character.PositionY].IsOccupied)
+                {
+                    CharacterStatModel.Enemy = GetEnemyOnPosition(character.PositionX, character.PositionY);
+                }
+                else
+                {
+                    Area[character.PositionX, character.PositionY].IsOccupied = true;
+                }
             }
         }
     }
