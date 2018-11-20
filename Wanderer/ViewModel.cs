@@ -11,7 +11,7 @@ namespace Wanderer
     public class ViewModel : INotifyPropertyChanged
     {
         private Hero _hero;
-        private Character _enemy;
+        private Enemy _enemy;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -27,7 +27,7 @@ namespace Wanderer
                 }
             }
         }
-        public Character Enemy
+        public Enemy Enemy
         {
             get { return _enemy; }
             set
