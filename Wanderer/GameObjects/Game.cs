@@ -145,6 +145,7 @@ namespace Wanderer.GameObjects
                     CharacterStatModel.OnPropertyChanged("Enemy");
                     if(enemy.CurrentHealthPoints <= 0)
                     {
+                        Hero.HasTheKey = enemy.GetType().Equals(typeof(Monster)) ? (enemy as Monster).HasTheKey : false;
                         Enemies.Remove(enemy);
                         _canvas.Children.Remove(enemy.Picture);
                         CharacterStatModel.Enemy = null;

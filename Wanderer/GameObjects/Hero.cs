@@ -54,10 +54,12 @@ namespace Wanderer.GameObjects
                 }
             }
         }
+        public bool HasTheKey { get; set; }
 
         public Hero()
         {
             Level = 1;
+            HasTheKey = false;
             Picture = new Image
             {
                 Width = 72,
