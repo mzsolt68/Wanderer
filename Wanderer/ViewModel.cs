@@ -12,6 +12,7 @@ namespace Wanderer
     {
         private Hero _hero;
         private Enemy _enemy;
+        private Game _game;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -39,7 +40,18 @@ namespace Wanderer
                 }
             }
         }
-        public Game Game { get; set; }
+        public Game Game
+        {
+            get { return _game; }
+            set
+            {
+                if (_game != value)
+                {
+                    _game = value;
+                    OnPropertyChanged("Game");
+                }
+            }
+        }
 
         public void OnPropertyChanged(string propertyName)
         {
