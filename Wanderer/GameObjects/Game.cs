@@ -30,6 +30,7 @@ namespace Wanderer.GameObjects
         public List<Enemy> Enemies;
         public ViewModel CharacterStatModel;
         private int[] _monsterLevels = {0, 0, 2, 1, 0, 0, 1, 0, 1, 1 };
+        private int[] _heroLevelupHealthPoints = {10, 33, 100, 10, 33, 10, 33, 10, 10, 33 };
 
         public Game()
         {
@@ -69,6 +70,14 @@ namespace Wanderer.GameObjects
         public void LevelUp()
         {
             GameLevel++;
+            CharacterStatModel.OnPropertyChanged("Game");
+            int dice = random.Next(0, 10);
+            Hero.CurrentHealthPoints += Hero.MaxHealthPoints * _heroLevelupHealthPoints[dice] / 100;
+            ClearArea();
+            CreateMonsters();
+            CreateBoss();
+            _canvas.Children.Add(Hero.Picture);
+            DrawCharacter(Hero);
         }
 
         public void DrawCharacter(Character character)
@@ -152,6 +161,10 @@ namespace Wanderer.GameObjects
                         Hero.LevelUp(dice);
                     }
                 }
+                if(Hero.HasTheKey)
+                {
+                    LevelUp();
+                }
             }
         }
 
@@ -205,6 +218,17 @@ namespace Wanderer.GameObjects
             _canvas.Children.Add(b.Picture);
             DrawCharacter(b);
             Enemies.Add(b);
+        }
+
+        private void ClearArea()
+        {
+            foreach (var item in Enemies)
+            {
+                _canvas.Children.Remove(item.Picture);
+                Area[item.PositionX, item.PositionY].IsOccupied = false;
+            }
+            Enemies.Clear();
+            _canvas.Children.Remove(Hero.Picture);
         }
 
         private void SetCoord(Character character)
