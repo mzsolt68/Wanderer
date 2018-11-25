@@ -191,8 +191,7 @@ namespace Wanderer.GameObjects
                 Monster m = new Monster();
                 dice = random.Next(1, 7);
                 m.Level = GameLevel + _monsterLevels[random.Next(0, 10)];
-                m.MaxHealthPoints = 2 * m.Level * dice;
-                m.CurrentHealthPoints = m.MaxHealthPoints;
+                m.CurrentHealthPoints = 2 * m.Level * dice;
                 m.DefendPoints = m.Level * dice / 2;
                 m.StrikePoints = m.Level * dice;
                 SetCoord(m);
@@ -210,8 +209,7 @@ namespace Wanderer.GameObjects
             Boss b = new Boss();
             int dice = random.Next(1, 7);
             b.Level = GameLevel + _monsterLevels[random.Next(0, 10)];
-            b.MaxHealthPoints = 2 * b.Level * dice + dice;
-            b.CurrentHealthPoints = b.MaxHealthPoints;
+            b.CurrentHealthPoints = 2 * b.Level * dice + dice;
             b.DefendPoints = (int)(b.Level / 2.0 * dice + dice / 2.0);
             b.StrikePoints = b.Level * dice + b.Level;
             SetCoord(b);

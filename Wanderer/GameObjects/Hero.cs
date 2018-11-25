@@ -9,13 +9,14 @@ using System.Windows.Media.Imaging;
 
 namespace Wanderer.GameObjects
 {
-    public enum Direction : int { Left, Right, Up, Down}
+    public enum Direction : int { Left, Right, Up, Down }
 
     public class Hero : Character, INotifyPropertyChanged
     {
         private int _currhealthpts;
         private int _defpts;
         private int _strpts;
+        private int _maxhealthpts;
         public event PropertyChangedEventHandler PropertyChanged;
 
         public override int CurrentHealthPoints
@@ -26,7 +27,23 @@ namespace Wanderer.GameObjects
                 if (_currhealthpts != value)
                 {
                     _currhealthpts = value;
+                    if (value > MaxHealthPoints)
+                    {
+                        MaxHealthPoints = value;
+                    }
                     OnPropertyChanged("CurrentHealthPoints");
+                }
+            }
+        }
+        public int MaxHealthPoints
+        {
+            get { return _maxhealthpts; }
+            set
+            {
+                if (_maxhealthpts != value)
+                {
+                    _maxhealthpts = value;
+                    OnPropertyChanged("MaxHealthPoints");
                 }
             }
         }
@@ -79,7 +96,7 @@ namespace Wanderer.GameObjects
 
         public void SetDirection(Direction direction)
         {
-            switch(direction)
+            switch (direction)
             {
                 case Direction.Left:
                     Picture.Source = new BitmapImage(new Uri("../Images/hero-left.png", UriKind.Relative));
