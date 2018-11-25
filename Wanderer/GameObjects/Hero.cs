@@ -73,9 +73,13 @@ namespace Wanderer.GameObjects
         }
         public bool HasTheKey { get; set; }
 
-        public Hero()
+        public Hero(int dice)
         {
             Level = 1;
+            MaxHealthPoints = 20 + 3 * dice;
+            CurrentHealthPoints = MaxHealthPoints;
+            DefendPoints = 2 * dice;
+            StrikePoints = 5 * dice;
             HasTheKey = false;
             Picture = new Image
             {

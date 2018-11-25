@@ -170,12 +170,7 @@ namespace Wanderer.GameObjects
 
         private void CreateHero()
         {
-            this.Hero = new Hero();
-            int dice = random.Next(1, 7);
-            Hero.MaxHealthPoints = 20 + 3 * dice;
-            Hero. CurrentHealthPoints = Hero.MaxHealthPoints;
-            Hero.DefendPoints = 2 * dice;
-            Hero.StrikePoints = 5 * dice;
+            this.Hero = new Hero(random.Next(1, 7));
             SetCoord(Hero);
             _canvas.Children.Add(Hero.Picture);
             DrawCharacter(Hero);
@@ -188,12 +183,8 @@ namespace Wanderer.GameObjects
             int dice;
             do
             {
-                Monster m = new Monster();
-                dice = random.Next(1, 7);
-                m.Level = GameLevel + _monsterLevels[random.Next(0, 10)];
-                m.CurrentHealthPoints = 2 * m.Level * dice;
-                m.DefendPoints = m.Level * dice / 2;
-                m.StrikePoints = m.Level * dice;
+                int level = GameLevel + _monsterLevels[random.Next(0, 10)];
+                Monster m = new Monster(level, random.Next(1, 7));
                 SetCoord(m);
                 _canvas.Children.Add(m.Picture);
                 DrawCharacter(m);
@@ -206,12 +197,8 @@ namespace Wanderer.GameObjects
 
         private void CreateBoss()
         {
-            Boss b = new Boss();
-            int dice = random.Next(1, 7);
-            b.Level = GameLevel + _monsterLevels[random.Next(0, 10)];
-            b.CurrentHealthPoints = 2 * b.Level * dice + dice;
-            b.DefendPoints = (int)(b.Level / 2.0 * dice + dice / 2.0);
-            b.StrikePoints = b.Level * dice + b.Level;
+            int level = GameLevel + _monsterLevels[random.Next(0, 10)];
+            Boss b = new Boss(level, random.Next(1, 7));
             SetCoord(b);
             _canvas.Children.Add(b.Picture);
             DrawCharacter(b);

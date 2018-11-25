@@ -53,8 +53,12 @@ namespace Wanderer.GameObjects
             }
         }
 
-        public Boss()
+        public Boss(int level, int dice)
         {
+            Level = level;
+            CurrentHealthPoints = 2 * Level * dice + dice;
+            DefendPoints = (int)(Level / 2.0 * dice + dice / 2.0);
+            StrikePoints = Level * dice + Level;
             Picture = new Image
             {
                 Width = 72,

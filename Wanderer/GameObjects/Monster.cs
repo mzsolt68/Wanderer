@@ -55,8 +55,12 @@ namespace Wanderer.GameObjects
 
         public bool HasTheKey { get; set; }
 
-        public Monster()
+        public Monster(int level, int dice)
         {
+            Level = level;
+            CurrentHealthPoints = 2 * Level * dice;
+            DefendPoints = Level * dice / 2;
+            StrikePoints = Level * dice;
             Picture = new Image
             {
                 Width = 72,
