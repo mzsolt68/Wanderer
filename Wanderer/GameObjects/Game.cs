@@ -45,6 +45,12 @@ namespace Wanderer.GameObjects
             DrawArea();
             CreateEnemies();
             CreateHero();
+            Hero.SecondStep += Hero_SecondStep;
+        }
+
+        private void Hero_SecondStep(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            //Itt kell megvalósítani az ellenfelek mozgását
         }
 
         private void InitArea()
@@ -141,12 +147,6 @@ namespace Wanderer.GameObjects
 
         public void StartBattle(Character attacker)
         {
-            //Ellenőrizni, hogy van-e másik karakter a mezőn
-            //Strike point számolás
-            //Ha a strike point nagyobb, mint a másik karakter defend pontja, akkor
-            //a másik karakter HP-ja csökken SP-DP értékkel.
-            //Ha a védekező HP-je nulla lesz, akkor meghal és eltúnik.
-            //Ha a támadó Hero volt, akkor a sikeres támadás után szintet lép.
             if (Area[attacker.PositionX, attacker.PositionY].IsOccupied)
             {
                 int dice = random.Next(1, 7);
@@ -268,6 +268,7 @@ namespace Wanderer.GameObjects
             DrawCharacter(character);
             if (character.GetType().Equals(typeof(Hero)))
             {
+                Hero.Steps++;
                 if (Area[character.PositionX, character.PositionY].IsOccupied)
                 {
                     CharacterStatModel.Enemy = GetEnemyOnPosition(character.PositionX, character.PositionY);

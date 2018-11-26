@@ -17,8 +17,25 @@ namespace Wanderer.GameObjects
         private int _defpts;
         private int _strpts;
         private int _maxhealthpts;
+        private int _steps;
         public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler SecondStep;
 
+        public int Steps
+        {
+            get { return _steps; }
+            set
+            {
+                if(_steps != value)
+                {
+                    _steps = value;
+                    if (_steps > 0 && _steps % 2 == 0)
+                    {
+                        SecondStep(this, new PropertyChangedEventArgs("Steps"));
+                    }
+                }
+            }
+        }
         public override int CurrentHealthPoints
         {
             get { return _currhealthpts; }
