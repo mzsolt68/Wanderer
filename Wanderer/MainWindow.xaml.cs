@@ -26,9 +26,7 @@ namespace Wanderer
         public MainWindow()
         {
             InitializeComponent();
-            game = new Game();
-            game.DrawArea(canvas);
-            game.CreateCharacters();
+            game = new Game(canvas);
             mainWindow.DataContext = game.CharacterStatModel;
         }
 

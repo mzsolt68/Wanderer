@@ -32,8 +32,9 @@ namespace Wanderer.GameObjects
         private int[] _monsterLevels = {0, 0, 2, 1, 0, 0, 1, 0, 1, 1 };
         private int[] _heroLevelupHealthPoints = {10, 33, 100, 10, 33, 10, 33, 10, 10, 33 };
 
-        public Game()
+        public Game(Canvas canvas)
         {
+            _canvas = canvas;
             Area = new Tile[10, 10];
             GameLevel = 1;
             random = new Random();
@@ -41,6 +42,9 @@ namespace Wanderer.GameObjects
             CharacterStatModel = new ViewModel();
             CharacterStatModel.Game = this;
             InitArea();
+            DrawArea();
+            CreateEnemies();
+            CreateHero();
         }
 
         private void InitArea()
@@ -52,10 +56,10 @@ namespace Wanderer.GameObjects
                 }
         }
 
-        public void DrawArea(Canvas canvas)
+        private void DrawArea()
         {
-            _canvas = canvas;
             for (int x = 0; x < Area.GetLength(0); x++)
+            {
                 for (int y = 0; y < Area.GetLength(1); y++)
                 {
                     Image tile = Area[x, y].Picture;
@@ -65,6 +69,7 @@ namespace Wanderer.GameObjects
                     Canvas.SetLeft(tile, x * 72);
                     Canvas.SetTop(tile, y * 72);
                 }
+            }
         }
 
         public void LevelUp()
@@ -74,10 +79,10 @@ namespace Wanderer.GameObjects
             int dice = random.Next(0, 10);
             Hero.CurrentHealthPoints += Hero.MaxHealthPoints * _heroLevelupHealthPoints[dice] / 100;
             ClearArea();
-            CreateMonsters();
-            CreateBoss();
+            CreateEnemies();
             _canvas.Children.Add(Hero.Picture);
             DrawCharacter(Hero);
+            Hero.HasTheKey = false;
         }
 
         public void DrawCharacter(Character character)
@@ -128,11 +133,10 @@ namespace Wanderer.GameObjects
             }
         }
 
-        public void CreateCharacters()
+        private void CreateEnemies()
         {
             CreateMonsters();
             CreateBoss();
-            CreateHero();
         }
 
         public void StartBattle(Character attacker)
