@@ -97,43 +97,44 @@ namespace Wanderer.GameObjects
             Canvas.SetTop(character.Picture, character.PositionY * 72);
         }
 
-        public void MoveHero(Hero hero, Direction direction)
+        public void MoveCharacter(Character character, Direction direction)
         {
+            if(character.GetType().Equals(typeof(Hero)))
+            {
+                (character as Hero).SetDirection(direction);
+            }
             switch (direction)
             {
                 case Direction.Up:
-                    hero.SetDirection(direction);
-                    if (hero.PositionY > 0 && Area[hero.PositionX, hero.PositionY - 1].Type == TileType.Floor)
+                    if (character.PositionY > 0 && Area[character.PositionX, character.PositionY - 1].Type == TileType.Floor)
                     {
-                        LeaveCell(hero);
-                        hero.PositionY--;
-                        EnterCell(hero);
+                        LeaveCell(character);
+                        character.PositionY--;
+                        EnterCell(character);
                     }
                     break;
                 case Direction.Down:
-                    hero.SetDirection(direction);
-                    if (hero.PositionY < 9 && Area[hero.PositionX, hero.PositionY + 1].Type == TileType.Floor)
+                    if (character.PositionY < 9 && Area[character.PositionX, character.PositionY + 1].Type == TileType.Floor)
                     {
-                        LeaveCell(hero);
-                        hero.PositionY++;
-                        EnterCell(hero);
+                        LeaveCell(character);
+                        character.PositionY++;
+                        EnterCell(character);
                     }
                     break;
                 case Direction.Left:
-                    hero.SetDirection(direction);
-                    if (hero.PositionX > 0 && Area[hero.PositionX - 1, hero.PositionY].Type == TileType.Floor)
+                    if (character.PositionX > 0 && Area[character.PositionX - 1, character.PositionY].Type == TileType.Floor)
                     {
-                        LeaveCell(hero);
-                        hero.PositionX--;
-                        EnterCell(hero);                    }
+                        LeaveCell(character);
+                        character.PositionX--;
+                        EnterCell(character);
+                    }
                     break;
                 case Direction.Right:
-                    hero.SetDirection(direction);
-                    if (hero.PositionX < 9 && Area[hero.PositionX + 1, hero.PositionY].Type == TileType.Floor)
+                    if (character.PositionX < 9 && Area[character.PositionX + 1, character.PositionY].Type == TileType.Floor)
                     {
-                        LeaveCell(hero);
-                        hero.PositionX++;
-                        EnterCell(hero);
+                        LeaveCell(character);
+                        character.PositionX++;
+                        EnterCell(character);
                     }
                     break;
             }

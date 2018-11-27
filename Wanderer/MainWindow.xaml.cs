@@ -35,16 +35,16 @@ namespace Wanderer
             switch(e.Key)
             {
                 case Key.Up:
-                    game.MoveHero(game.Hero, Direction.Up);
+                    game.MoveCharacter(game.Hero, Direction.Up);
                     break;
                 case Key.Down:
-                    game.MoveHero(game.Hero, Direction.Down);
+                    game.MoveCharacter(game.Hero, Direction.Down);
                     break;
                 case Key.Left:
-                    game.MoveHero(game.Hero, Direction.Left);
+                    game.MoveCharacter(game.Hero, Direction.Left);
                     break;
                 case Key.Right:
-                    game.MoveHero(game.Hero, Direction.Right);
+                    game.MoveCharacter(game.Hero, Direction.Right);
                     break;
                 case Key.Space:
                     game.StartBattle(game.Hero);
