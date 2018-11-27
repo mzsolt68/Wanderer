@@ -11,7 +11,7 @@ namespace Wanderer.GameObjects
     {
         public Tile[,] Area { get; set; }
         private Canvas _canvas;
-        private byte[,] _firstmap = new byte[,] 
+        private byte[,] _firstmap = new byte[,]
         {
             {1, 1, 1, 0, 1, 0, 1, 1, 1, 1 },
             {1, 1, 1, 0, 1, 0, 1, 0, 0, 1 },
@@ -29,8 +29,8 @@ namespace Wanderer.GameObjects
         public Hero Hero;
         public List<Enemy> Enemies;
         public ViewModel CharacterStatModel;
-        private int[] _monsterLevels = {0, 0, 2, 1, 0, 0, 1, 0, 1, 1 };
-        private int[] _heroLevelupHealthPoints = {10, 33, 100, 10, 33, 10, 33, 10, 10, 33 };
+        private int[] _monsterLevels = { 0, 0, 2, 1, 0, 0, 1, 0, 1, 1 };
+        private int[] _heroLevelupHealthPoints = { 10, 33, 100, 10, 33, 10, 33, 10, 10, 33 };
 
         public Game(Canvas canvas)
         {
@@ -51,12 +51,17 @@ namespace Wanderer.GameObjects
         private void Hero_SecondStep(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             //Itt kell megvalósítani az ellenfelek mozgását
+            foreach (var enemy in Enemies)
+            {
+                Direction enemyDirection = (Direction)random.Next(Enum.GetNames(typeof(Direction)).Length);
+                MoveCharacter(enemy, enemyDirection);
+            }
         }
 
         private void InitArea()
         {
-            for(int x = 0; x < Area.GetLength(0); x++)
-                for(int y = 0; y < Area.GetLength(1); y++)
+            for (int x = 0; x < Area.GetLength(0); x++)
+                for (int y = 0; y < Area.GetLength(1); y++)
                 {
                     Area[x, y] = new Tile(_firstmap[x, y] == 0 ? TileType.Wall : TileType.Floor);
                 }
@@ -99,14 +104,14 @@ namespace Wanderer.GameObjects
 
         public void MoveCharacter(Character character, Direction direction)
         {
-            if(character.GetType().Equals(typeof(Hero)))
+            if (character.GetType().Equals(typeof(Hero)))
             {
                 (character as Hero).SetDirection(direction);
             }
             switch (direction)
             {
                 case Direction.Up:
-                    if (character.PositionY > 0 && Area[character.PositionX, character.PositionY - 1].Type == TileType.Floor)
+                    if (character.PositionY > 0 && NewPositionIsFloor(character.PositionX, character.PositionY - 1))
                     {
                         LeaveCell(character);
                         character.PositionY--;
@@ -114,7 +119,7 @@ namespace Wanderer.GameObjects
                     }
                     break;
                 case Direction.Down:
-                    if (character.PositionY < 9 && Area[character.PositionX, character.PositionY + 1].Type == TileType.Floor)
+                    if (character.PositionY < 9 && NewPositionIsFloor(character.PositionX, character.PositionY + 1))
                     {
                         LeaveCell(character);
                         character.PositionY++;
@@ -122,7 +127,7 @@ namespace Wanderer.GameObjects
                     }
                     break;
                 case Direction.Left:
-                    if (character.PositionX > 0 && Area[character.PositionX - 1, character.PositionY].Type == TileType.Floor)
+                    if (character.PositionX > 0 && NewPositionIsFloor(character.PositionX - 1, character.PositionY))
                     {
                         LeaveCell(character);
                         character.PositionX--;
@@ -130,7 +135,7 @@ namespace Wanderer.GameObjects
                     }
                     break;
                 case Direction.Right:
-                    if (character.PositionX < 9 && Area[character.PositionX + 1, character.PositionY].Type == TileType.Floor)
+                    if (character.PositionX < 9 && NewPositionIsFloor(character.PositionX + 1, character.PositionY))
                     {
                         LeaveCell(character);
                         character.PositionX++;
@@ -153,11 +158,11 @@ namespace Wanderer.GameObjects
                 int dice = random.Next(1, 7);
                 int strikeValue = dice * 2 + attacker.StrikePoints;
                 Enemy enemy = CharacterStatModel.Enemy;
-                if(strikeValue > enemy.DefendPoints)
+                if (strikeValue > enemy.DefendPoints)
                 {
                     enemy.CurrentHealthPoints = enemy.CurrentHealthPoints - (strikeValue - enemy.DefendPoints);
                     CharacterStatModel.OnPropertyChanged("Enemy");
-                    if(enemy.CurrentHealthPoints <= 0)
+                    if (enemy.CurrentHealthPoints <= 0)
                     {
                         Hero.HasTheKey = enemy.GetType().Equals(typeof(Monster)) ? (enemy as Monster).HasTheKey : false;
                         Enemies.Remove(enemy);
@@ -166,7 +171,7 @@ namespace Wanderer.GameObjects
                         Hero.LevelUp(dice);
                     }
                 }
-                if(Hero.HasTheKey)
+                if (Hero.HasTheKey)
                 {
                     LevelUp();
                 }
@@ -241,7 +246,7 @@ namespace Wanderer.GameObjects
         {
             foreach (Enemy enemy in Enemies)
             {
-                if(enemy.PositionX == x && enemy.PositionY == y)
+                if (enemy.PositionX == x && enemy.PositionY == y)
                 {
                     return enemy;
                 }
@@ -249,9 +254,13 @@ namespace Wanderer.GameObjects
             return null;
         }
 
+        private bool NewPositionIsFloor(int x, int y)
+        {
+            return Area[x, y].Type == TileType.Floor;
+        }
+
         private void LeaveCell(Character character)
         {
-            if (character.GetType().Equals(typeof(Hero)))
             {
                 if (CharacterStatModel.Enemy == null)
                 {
@@ -270,14 +279,14 @@ namespace Wanderer.GameObjects
             if (character.GetType().Equals(typeof(Hero)))
             {
                 Hero.Steps++;
-                if (Area[character.PositionX, character.PositionY].IsOccupied)
-                {
-                    CharacterStatModel.Enemy = GetEnemyOnPosition(character.PositionX, character.PositionY);
-                }
-                else
-                {
-                    Area[character.PositionX, character.PositionY].IsOccupied = true;
-                }
+            }
+            if (Area[character.PositionX, character.PositionY].IsOccupied)
+            {
+                CharacterStatModel.Enemy = GetEnemyOnPosition(character.PositionX, character.PositionY);
+            }
+            else
+            {
+                Area[character.PositionX, character.PositionY].IsOccupied = true;
             }
         }
     }
