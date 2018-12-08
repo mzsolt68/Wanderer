@@ -8,7 +8,7 @@ using System.Windows.Controls;
 
 namespace Wanderer.GameObjects
 {
-    public abstract class Character
+    public abstract class Character : INotifyPropertyChanged
     {
         public int Level { get; set; }
         public abstract int CurrentHealthPoints { get; set; }
@@ -18,6 +18,15 @@ namespace Wanderer.GameObjects
         public int PositionY { get; set; }
         public Image Picture { get; set; }
 
-        public abstract void OnPropertyChanged(string propertyName);
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void OnPropertyChanged(string propertyName)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null)
+            {
+                handler(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
     }
 }

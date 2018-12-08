@@ -12,7 +12,6 @@ namespace Wanderer.GameObjects
     public class Boss : Enemy
     {
         private int _currhealthpts;
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public override int CurrentHealthPoints
         {
@@ -39,15 +38,6 @@ namespace Wanderer.GameObjects
                 Height = 72
             };
             Picture.Source = new BitmapImage(new Uri("../Images/boss.png", UriKind.Relative));
-        }
-
-        public override void OnPropertyChanged(string propertyName)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null)
-            {
-                handler(this, new PropertyChangedEventArgs(propertyName));
-            }
         }
     }
 }

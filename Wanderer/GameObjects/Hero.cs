@@ -11,13 +11,12 @@ namespace Wanderer.GameObjects
 {
     public enum Direction : int { Left, Right, Up, Down }
 
-    public class Hero : Character, INotifyPropertyChanged
+    public class Hero : Character
     {
         private int _currhealthpts;
         private int _maxhealthpts;
         private int _steps;
         private int[] _heroLevelupHealthPoints = { 10, 33, 100, 10, 33, 10, 33, 10, 10, 33 };
-        public event PropertyChangedEventHandler PropertyChanged;
         public event PropertyChangedEventHandler SecondStep;
 
         public int Steps
@@ -80,15 +79,6 @@ namespace Wanderer.GameObjects
                 Height = 72
             };
             SetDirection(Direction.Down);
-        }
-
-        public override void OnPropertyChanged(string propertyName)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null)
-            {
-                handler(this, new PropertyChangedEventArgs(propertyName));
-            }
         }
 
         public void SetDirection(Direction direction)

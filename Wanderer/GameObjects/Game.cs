@@ -159,7 +159,6 @@ namespace Wanderer.GameObjects
                 if (strikeValue > enemy.DefendPoints)
                 {
                     enemy.CurrentHealthPoints = enemy.CurrentHealthPoints - (strikeValue - enemy.DefendPoints);
-                    CharacterStatModel.OnPropertyChanged("Enemy");
                     if (enemy.CurrentHealthPoints <= 0)
                     {
                         Hero.HasTheKey = enemy.GetType().Equals(typeof(Monster)) ? (enemy as Monster).HasTheKey : false;
