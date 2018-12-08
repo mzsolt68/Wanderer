@@ -16,10 +16,11 @@ namespace Wanderer.GameObjects
         private int _currhealthpts;
         private int _maxhealthpts;
         private int _steps;
+        private bool _hasthekey;
         private int[] _heroLevelupHealthPoints = { 10, 33, 100, 10, 33, 10, 33, 10, 10, 33 };
         public event PropertyChangedEventHandler SecondStep;
         public event PropertyChangedEventHandler HeroDied;
-
+        public event PropertyChangedEventHandler GotTheKey;
         public int Steps
         {
             get { return _steps; }
@@ -68,7 +69,17 @@ namespace Wanderer.GameObjects
             }
         }
 
-        public bool HasTheKey { get; set; }
+        public bool HasTheKey {
+            //get;
+            set
+            {
+                if(_hasthekey != value)
+                {
+                    _hasthekey = value;
+                    GotTheKey(this, new PropertyChangedEventArgs("HasTheKey"));
+                }
+            }
+        }
 
         public Hero(int dice)
         {
