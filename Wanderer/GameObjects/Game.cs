@@ -166,10 +166,7 @@ namespace Wanderer.GameObjects
                 int dice = random.Next(1, 7);
                 int strikeValue = dice * 2 + attacker.StrikePoints;
                 Enemy enemy = CharacterStatModel.Enemy;
-                if (strikeValue > enemy.DefendPoints)
-                {
-                    enemy.CurrentHealthPoints = enemy.CurrentHealthPoints - (strikeValue - enemy.DefendPoints);
-                }
+                enemy.TakeAStrike(strikeValue);
                 if (Hero.HasTheKey)
                 {
                     LevelUp();

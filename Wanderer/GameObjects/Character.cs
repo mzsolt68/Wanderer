@@ -28,5 +28,13 @@ namespace Wanderer.GameObjects
                 handler(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+
+        public void TakeAStrike(int strikeValue)
+        {
+            if (strikeValue > DefendPoints)
+            {
+                CurrentHealthPoints = CurrentHealthPoints - (strikeValue - DefendPoints);
+            }
+        }
     }
 }

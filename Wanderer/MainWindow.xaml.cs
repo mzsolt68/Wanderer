@@ -47,7 +47,10 @@ namespace Wanderer
                     game.MoveCharacter(game.Hero, Direction.Right);
                     break;
                 case Key.Space:
-                    game.StartBattle(game.Hero);
+                    if (game.Area[game.Hero.PositionX, game.Hero.PositionY].EnemyOnIt != null)
+                    {
+                        game.StartBattle(game.Hero);
+                    }
                     break;
             }
         }
