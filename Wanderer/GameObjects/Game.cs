@@ -221,7 +221,7 @@ namespace Wanderer.GameObjects
             foreach (var item in Enemies)
             {
                 _canvas.Children.Remove(item.Picture);
-                Area[item.PositionX, item.PositionY].IsOccupied = false;
+                Area[item.PositionX, item.PositionY].EnemyOnIt = null;
             }
             Enemies.Clear();
             _canvas.Children.Remove(Hero.Picture);
@@ -238,21 +238,16 @@ namespace Wanderer.GameObjects
                     y = random.Next(0, 10);
                 } while (Area[x, y].Type != TileType.Floor);
             } while (Area[x, y].IsOccupied);
-            Area[x, y].IsOccupied = true;
+            if (character.GetType().Equals(typeof(Hero)))
+            {
+                Area[x, y].HeroOnIt = true;
+            }
+            else
+            {
+                Area[x, y].EnemyOnIt = character as Enemy;
+            }
             character.PositionX = x;
             character.PositionY = y;
-        }
-
-        private Enemy GetEnemyOnPosition(int x, int y)
-        {
-            foreach (Enemy enemy in Enemies)
-            {
-                if (enemy.PositionX == x && enemy.PositionY == y)
-                {
-                    return enemy;
-                }
-            }
-            return null;
         }
 
         private bool NewPositionIsFloor(int x, int y)
@@ -262,15 +257,23 @@ namespace Wanderer.GameObjects
 
         private void LeaveCell(Character character)
         {
+            switch(character.GetType().ToString())
             {
-                if (CharacterStatModel.Enemy == null)
-                {
-                    Area[character.PositionX, character.PositionY].IsOccupied = false;
-                }
-                else
-                {
+                case "Hero":
+                    if (CharacterStatModel.Enemy == null)
+                    {
+                        Area[character.PositionX, character.PositionY].HeroOnIt = false;
+                    }
+                    else
+                    {
+                        CharacterStatModel.Enemy = null;
+                    }
+                    break;
+                case "Boss":
+                case "Monster":
+                    Area[character.PositionX, character.PositionY].EnemyOnIt = null;
                     CharacterStatModel.Enemy = null;
-                }
+                    break;
             }
         }
 
@@ -280,14 +283,11 @@ namespace Wanderer.GameObjects
             if (character.GetType().Equals(typeof(Hero)))
             {
                 Hero.Steps++;
-            }
-            if (Area[character.PositionX, character.PositionY].IsOccupied)
-            {
-                CharacterStatModel.Enemy = GetEnemyOnPosition(character.PositionX, character.PositionY);
+                CharacterStatModel.Enemy = Area[character.PositionX, character.PositionY].EnemyOnIt;
             }
             else
             {
-                Area[character.PositionX, character.PositionY].IsOccupied = true;
+                Area[character.PositionX, character.PositionY].EnemyOnIt = character as Enemy;
             }
         }
 
