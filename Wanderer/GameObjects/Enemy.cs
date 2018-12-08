@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,8 @@ namespace Wanderer.GameObjects
         protected int[] _monsterLevels = { 0, 0, 2, 1, 0, 0, 1, 0, 1, 1 };
         private int _currhealthpts;
 
+        public event PropertyChangedEventHandler EnemyDied;
+
         public override int CurrentHealthPoints
         {
             get { return _currhealthpts; }
@@ -20,6 +23,10 @@ namespace Wanderer.GameObjects
                 {
                     _currhealthpts = value;
                     OnPropertyChanged("CurrentHealthPoints");
+                    if(_currhealthpts <= 0)
+                    {
+                        EnemyDied(this, new System.ComponentModel.PropertyChangedEventArgs("CurrentHealthPoints"));
+                    }
                 }
             }
         }

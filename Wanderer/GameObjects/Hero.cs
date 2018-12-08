@@ -18,6 +18,7 @@ namespace Wanderer.GameObjects
         private int _steps;
         private int[] _heroLevelupHealthPoints = { 10, 33, 100, 10, 33, 10, 33, 10, 10, 33 };
         public event PropertyChangedEventHandler SecondStep;
+        public event PropertyChangedEventHandler HeroDied;
 
         public int Steps
         {
@@ -47,6 +48,10 @@ namespace Wanderer.GameObjects
                         MaxHealthPoints = value;
                     }
                     OnPropertyChanged("CurrentHealthPoints");
+                    if(_currhealthpts <= 0)
+                    {
+                        HeroDied(this, new PropertyChangedEventArgs("CurrentHealthPoints"));
+                    }
                 }
             }
         }
