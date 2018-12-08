@@ -10,7 +10,22 @@ namespace Wanderer.GameObjects
 {
     public abstract class Character : INotifyPropertyChanged
     {
-        public int Level { get; set; }
+        private int _level;
+        public int Level
+        {
+            get
+            {
+                return _level;
+            }
+            set
+            {
+                if(_level != value)
+                {
+                    _level = value;
+                    OnPropertyChanged("Level");
+                }
+            }
+        }
         public abstract int CurrentHealthPoints { get; set; }
         public int DefendPoints { get; set; }
         public int StrikePoints { get; set; }
