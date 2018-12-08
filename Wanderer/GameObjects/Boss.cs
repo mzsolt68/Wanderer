@@ -11,24 +11,9 @@ namespace Wanderer.GameObjects
 {
     public class Boss : Enemy
     {
-        private int _currhealthpts;
-
-        public override int CurrentHealthPoints
+        public Boss(int gameLevel, int enemyLevel, int dice)
         {
-            get { return _currhealthpts; }
-            set
-            {
-                if (_currhealthpts != value)
-                {
-                    _currhealthpts = value;
-                    OnPropertyChanged("CurrentHealthPoints");
-                }
-            }
-        }
-
-        public Boss(int level, int dice)
-        {
-            Level = level;
+            Level = gameLevel + _monsterLevels[enemyLevel];
             CurrentHealthPoints = 2 * Level * dice + dice;
             DefendPoints = (int)(Level / 2.0 * dice + dice / 2.0);
             StrikePoints = Level * dice + Level;

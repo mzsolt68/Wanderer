@@ -190,8 +190,7 @@ namespace Wanderer.GameObjects
             int dice;
             do
             {
-                int level = GameLevel + _monsterLevels[random.Next(0, 10)];
-                Monster m = new Monster(level, random.Next(1, 7));
+                Monster m = new Monster(GameLevel, random.Next(0, 10), random.Next(1, 7));
                 SetCoord(m);
                 _canvas.Children.Add(m.Picture);
                 DrawCharacter(m);
@@ -204,8 +203,7 @@ namespace Wanderer.GameObjects
 
         private void CreateBoss()
         {
-            int level = GameLevel + _monsterLevels[random.Next(0, 10)];
-            Boss b = new Boss(level, random.Next(1, 7));
+            Boss b = new Boss(GameLevel, random.Next(0, 10), random.Next(1, 7));
             SetCoord(b);
             _canvas.Children.Add(b.Picture);
             DrawCharacter(b);
