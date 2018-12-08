@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -44,10 +45,9 @@ namespace Wanderer.GameObjects
             DrawArea();
             CreateEnemies();
             CreateHero();
-            Hero.SecondStep += Hero_SecondStep;
         }
 
-        private void Hero_SecondStep(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void MoveEnemies(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             //Itt kell megvalósítani az ellenfelek mozgását
             foreach (var enemy in Enemies)
@@ -149,6 +149,16 @@ namespace Wanderer.GameObjects
             CreateBoss();
         }
 
+        private void EnemyDied(object sender, PropertyChangedEventArgs e)
+        {
+            var enemy = sender as Enemy;
+            Hero.HasTheKey = enemy.GetType().Equals(typeof(Monster)) ? (enemy as Monster).HasTheKey : false;
+            Enemies.Remove(enemy);
+            _canvas.Children.Remove(enemy.Picture);
+            CharacterStatModel.Enemy = null;
+            Hero.LevelUp(random.Next(1, 7));
+        }
+
         public void StartBattle(Character attacker)
         {
             if (Area[attacker.PositionX, attacker.PositionY].IsOccupied)
@@ -159,14 +169,6 @@ namespace Wanderer.GameObjects
                 if (strikeValue > enemy.DefendPoints)
                 {
                     enemy.CurrentHealthPoints = enemy.CurrentHealthPoints - (strikeValue - enemy.DefendPoints);
-                    if (enemy.CurrentHealthPoints <= 0)
-                    {
-                        Hero.HasTheKey = enemy.GetType().Equals(typeof(Monster)) ? (enemy as Monster).HasTheKey : false;
-                        Enemies.Remove(enemy);
-                        _canvas.Children.Remove(enemy.Picture);
-                        CharacterStatModel.Enemy = null;
-                        Hero.LevelUp(dice);
-                    }
                 }
                 if (Hero.HasTheKey)
                 {
@@ -182,6 +184,8 @@ namespace Wanderer.GameObjects
             _canvas.Children.Add(Hero.Picture);
             DrawCharacter(Hero);
             CharacterStatModel.Hero = Hero;
+            Hero.SecondStep += MoveEnemies;
+            Hero.HeroDied += EndGame;
         }
 
         private void CreateMonsters()
@@ -191,6 +195,7 @@ namespace Wanderer.GameObjects
             do
             {
                 Monster m = new Monster(GameLevel, random.Next(0, 10), random.Next(1, 7));
+                m.EnemyDied += EnemyDied;
                 SetCoord(m);
                 _canvas.Children.Add(m.Picture);
                 DrawCharacter(m);
@@ -204,6 +209,7 @@ namespace Wanderer.GameObjects
         private void CreateBoss()
         {
             Boss b = new Boss(GameLevel, random.Next(0, 10), random.Next(1, 7));
+            b.EnemyDied += EnemyDied;
             SetCoord(b);
             _canvas.Children.Add(b.Picture);
             DrawCharacter(b);
@@ -283,6 +289,11 @@ namespace Wanderer.GameObjects
             {
                 Area[character.PositionX, character.PositionY].IsOccupied = true;
             }
+        }
+
+        private void EndGame(object sender, PropertyChangedEventArgs e)
+        {
+            //
         }
     }
 }
