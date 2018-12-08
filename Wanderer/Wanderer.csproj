@@ -101,7 +101,6 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <None Include="README.md" />
-    <None Include="Stories.md" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
