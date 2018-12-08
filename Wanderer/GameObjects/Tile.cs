@@ -16,7 +16,15 @@ namespace Wanderer.GameObjects
         public Image Picture { get; private set; }
         public int Width { get; private set; }
         public int Height { get; private set; }
-        public bool IsOccupied { get; set; }
+        public bool HeroOnIt { get; set; }
+        public Enemy EnemyOnIt { get; set; }
+        public bool IsOccupied {
+            get
+            {
+                return HeroOnIt || (EnemyOnIt != null);
+            }
+            //private set;
+        }
 
         public Tile(TileType type)
         {
@@ -33,7 +41,6 @@ namespace Wanderer.GameObjects
             {
                 Picture.Source = new BitmapImage(new Uri("../Images/wall.png", UriKind.Relative));
             }
-            IsOccupied = false;
         }
     }
 }
