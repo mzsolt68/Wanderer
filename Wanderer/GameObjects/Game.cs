@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
@@ -159,19 +160,24 @@ namespace Wanderer.GameObjects
             Hero.LevelUp(random.Next(1, 7));
         }
 
-        public void StartBattle(Character attacker)
+        public void HeroHasTheKey(object sender, PropertyChangedEventArgs e)
         {
-            if (Area[attacker.PositionX, attacker.PositionY].IsOccupied)
+            LevelUp();
+        }
+
+        public void StartBattle(Character attacker, Character defender)
+        {
+            int dice;
+            int strikeValue;
+            do
             {
-                int dice = random.Next(1, 7);
-                int strikeValue = dice * 2 + attacker.StrikePoints;
-                Enemy enemy = CharacterStatModel.Enemy;
-                enemy.TakeAStrike(strikeValue);
-                if (Hero.HasTheKey)
-                {
-                    LevelUp();
-                }
-            }
+                dice = random.Next(1, 7);
+                strikeValue = dice * 2 + attacker.StrikePoints;
+                defender.TakeAStrike(strikeValue);
+                var tmp = attacker;
+                attacker = defender;
+                defender = tmp;
+            } while (attacker.CurrentHealthPoints > 0 && defender.CurrentHealthPoints > 0);
         }
 
         private void CreateHero()
@@ -182,7 +188,7 @@ namespace Wanderer.GameObjects
             DrawCharacter(Hero);
             CharacterStatModel.Hero = Hero;
             Hero.SecondStep += MoveEnemies;
-            Hero.HeroDied += EndGame;
+            Hero.GotTheKey += HeroHasTheKey;
         }
 
         private void CreateMonsters()

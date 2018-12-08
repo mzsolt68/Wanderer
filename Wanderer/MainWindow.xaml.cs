@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,6 +29,7 @@ namespace Wanderer
             InitializeComponent();
             game = new Game(canvas);
             mainWindow.DataContext = game.CharacterStatModel;
+            game.Hero.HeroDied += EndGame;
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
@@ -49,10 +51,15 @@ namespace Wanderer
                 case Key.Space:
                     if (game.Area[game.Hero.PositionX, game.Hero.PositionY].EnemyOnIt != null)
                     {
-                        game.StartBattle(game.Hero);
+                        game.StartBattle(game.Hero, game.Area[game.Hero.PositionX, game.Hero.PositionY].EnemyOnIt);
                     }
                     break;
             }
+        }
+
+        private void EndGame(object sender, PropertyChangedEventArgs e)
+        {
+            this.Close();
         }
 
     }
