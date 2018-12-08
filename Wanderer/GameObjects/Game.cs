@@ -9,7 +9,7 @@ using System.Windows.Controls;
 
 namespace Wanderer.GameObjects
 {
-    public class Game
+    public partial class Game
     {
         public Tile[,] Area { get; set; }
         private Canvas _canvas;
@@ -31,7 +31,6 @@ namespace Wanderer.GameObjects
         public Hero Hero;
         public List<Enemy> Enemies;
         public ViewModel CharacterStatModel;
-        private int[] _monsterLevels = { 0, 0, 2, 1, 0, 0, 1, 0, 1, 1 };
 
         public Game(Canvas canvas)
         {
@@ -48,42 +47,7 @@ namespace Wanderer.GameObjects
             CreateHero();
         }
 
-        private void MoveEnemies(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            //Itt kell megvalósítani az ellenfelek mozgását
-            foreach (var enemy in Enemies)
-            {
-                Direction enemyDirection = (Direction)random.Next(Enum.GetNames(typeof(Direction)).Length);
-                MoveCharacter(enemy, enemyDirection);
-            }
-        }
-
-        private void InitArea()
-        {
-            for (int x = 0; x < Area.GetLength(0); x++)
-                for (int y = 0; y < Area.GetLength(1); y++)
-                {
-                    Area[x, y] = new Tile(_firstmap[x, y] == 0 ? TileType.Wall : TileType.Floor);
-                }
-        }
-
-        private void DrawArea()
-        {
-            for (int x = 0; x < Area.GetLength(0); x++)
-            {
-                for (int y = 0; y < Area.GetLength(1); y++)
-                {
-                    Image tile = Area[x, y].Picture;
-                    tile.Height = Area[x, y].Height;
-                    tile.Width = Area[x, y].Width;
-                    _canvas.Children.Add(tile);
-                    Canvas.SetLeft(tile, x * 72);
-                    Canvas.SetTop(tile, y * 72);
-                }
-            }
-        }
-
-        public void LevelUp()
+        private void LevelUp()
         {
             GameLevel++;
             CharacterStatModel.OnPropertyChanged("Game");
@@ -95,7 +59,7 @@ namespace Wanderer.GameObjects
             Hero.HasTheKey = false;
         }
 
-        public void DrawCharacter(Character character)
+        private void DrawCharacter(Character character)
         {
             Canvas.SetLeft(character.Picture, character.PositionX * 72);
             Canvas.SetTop(character.Picture, character.PositionY * 72);
@@ -144,27 +108,6 @@ namespace Wanderer.GameObjects
             }
         }
 
-        private void CreateEnemies()
-        {
-            CreateMonsters();
-            CreateBoss();
-        }
-
-        private void EnemyDied(object sender, PropertyChangedEventArgs e)
-        {
-            var enemy = sender as Enemy;
-            Hero.HasTheKey = enemy.GetType().Equals(typeof(Monster)) ? (enemy as Monster).HasTheKey : false;
-            Enemies.Remove(enemy);
-            _canvas.Children.Remove(enemy.Picture);
-            CharacterStatModel.Enemy = null;
-            Hero.LevelUp(random.Next(1, 7));
-        }
-
-        public void HeroHasTheKey(object sender, PropertyChangedEventArgs e)
-        {
-            LevelUp();
-        }
-
         public void StartBattle(Character attacker, Character defender)
         {
             int dice;
@@ -178,45 +121,6 @@ namespace Wanderer.GameObjects
                 attacker = defender;
                 defender = tmp;
             } while (attacker.CurrentHealthPoints > 0 && defender.CurrentHealthPoints > 0);
-        }
-
-        private void CreateHero()
-        {
-            this.Hero = new Hero(random.Next(1, 7));
-            SetCoord(Hero);
-            _canvas.Children.Add(Hero.Picture);
-            DrawCharacter(Hero);
-            CharacterStatModel.Hero = Hero;
-            Hero.SecondStep += MoveEnemies;
-            Hero.GotTheKey += HeroHasTheKey;
-        }
-
-        private void CreateMonsters()
-        {
-            int nrOfMonsters = random.Next(2, 6);
-            int dice;
-            do
-            {
-                Monster m = new Monster(GameLevel, random.Next(0, 10), random.Next(1, 7));
-                m.EnemyDied += EnemyDied;
-                SetCoord(m);
-                _canvas.Children.Add(m.Picture);
-                DrawCharacter(m);
-                Enemies.Add(m);
-                nrOfMonsters--;
-            } while (nrOfMonsters > 0);
-            dice = random.Next(0, Enemies.Count);
-            (Enemies[dice] as Monster).HasTheKey = true;
-        }
-
-        private void CreateBoss()
-        {
-            Boss b = new Boss(GameLevel, random.Next(0, 10), random.Next(1, 7));
-            b.EnemyDied += EnemyDied;
-            SetCoord(b);
-            _canvas.Children.Add(b.Picture);
-            DrawCharacter(b);
-            Enemies.Add(b);
         }
 
         private void ClearArea()
@@ -260,23 +164,22 @@ namespace Wanderer.GameObjects
 
         private void LeaveCell(Character character)
         {
-            switch(character.GetType().ToString())
+            if(character.GetType().Equals(typeof(Hero)))
             {
-                case "Hero":
-                    if (CharacterStatModel.Enemy == null)
-                    {
-                        Area[character.PositionX, character.PositionY].HeroOnIt = false;
-                    }
-                    else
-                    {
-                        CharacterStatModel.Enemy = null;
-                    }
-                    break;
-                case "Boss":
-                case "Monster":
-                    Area[character.PositionX, character.PositionY].EnemyOnIt = null;
+                if (CharacterStatModel.Enemy == null)
+                {
+                    Area[character.PositionX, character.PositionY].HeroOnIt = false;
+                }
+                else
+                {
                     CharacterStatModel.Enemy = null;
-                    break;
+                }
+            }
+            else
+            {
+                Area[character.PositionX, character.PositionY].EnemyOnIt = null;
+                CharacterStatModel.Enemy = null;
+
             }
         }
 
@@ -292,11 +195,6 @@ namespace Wanderer.GameObjects
             {
                 Area[character.PositionX, character.PositionY].EnemyOnIt = character as Enemy;
             }
-        }
-
-        private void EndGame(object sender, PropertyChangedEventArgs e)
-        {
-            //
         }
     }
 }

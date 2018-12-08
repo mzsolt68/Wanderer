@@ -58,6 +58,8 @@
     <Compile Include="GameObjects\Boss.cs" />
     <Compile Include="GameObjects\Enemy.cs" />
     <Compile Include="GameObjects\Game.cs" />
+    <Compile Include="GameObjects\Game.EventHandlers.cs" />
+    <Compile Include="GameObjects\Game.Initializations.cs" />
     <Compile Include="GameObjects\Monster.cs" />
     <Compile Include="GameObjects\Tile.cs" />
     <Compile Include="ViewModel.cs" />
