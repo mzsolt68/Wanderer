@@ -18,6 +18,7 @@ namespace Wanderer.GameObjects
         private int _strpts;
         private int _maxhealthpts;
         private int _steps;
+        private int[] _heroLevelupHealthPoints = { 10, 33, 100, 10, 33, 10, 33, 10, 10, 33 };
         public event PropertyChangedEventHandler PropertyChanged;
         public event PropertyChangedEventHandler SecondStep;
 
@@ -137,9 +138,15 @@ namespace Wanderer.GameObjects
 
         public void LevelUp(int dice)
         {
+            Level++;
             MaxHealthPoints += dice;
             DefendPoints += dice;
             StrikePoints += dice;
+        }
+
+        public void GoNextField(int dice)
+        {
+            CurrentHealthPoints += MaxHealthPoints * _heroLevelupHealthPoints[dice] / 100;
         }
     }
 }

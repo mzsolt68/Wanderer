@@ -30,7 +30,6 @@ namespace Wanderer.GameObjects
         public List<Enemy> Enemies;
         public ViewModel CharacterStatModel;
         private int[] _monsterLevels = { 0, 0, 2, 1, 0, 0, 1, 0, 1, 1 };
-        private int[] _heroLevelupHealthPoints = { 10, 33, 100, 10, 33, 10, 33, 10, 10, 33 };
 
         public Game(Canvas canvas)
         {
@@ -87,8 +86,7 @@ namespace Wanderer.GameObjects
         {
             GameLevel++;
             CharacterStatModel.OnPropertyChanged("Game");
-            int dice = random.Next(0, 10);
-            Hero.CurrentHealthPoints += Hero.MaxHealthPoints * _heroLevelupHealthPoints[dice] / 100;
+            Hero.GoNextField(random.Next(0, 10));
             ClearArea();
             CreateEnemies();
             _canvas.Children.Add(Hero.Picture);
