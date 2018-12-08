@@ -14,8 +14,6 @@ namespace Wanderer.GameObjects
     public class Hero : Character, INotifyPropertyChanged
     {
         private int _currhealthpts;
-        private int _defpts;
-        private int _strpts;
         private int _maxhealthpts;
         private int _steps;
         private int[] _heroLevelupHealthPoints = { 10, 33, 100, 10, 33, 10, 33, 10, 10, 33 };
@@ -65,30 +63,7 @@ namespace Wanderer.GameObjects
                 }
             }
         }
-        public override int DefendPoints
-        {
-            get { return _defpts; }
-            set
-            {
-                if (_defpts != value)
-                {
-                    _defpts = value;
-                    OnPropertyChanged("DefendPoints");
-                }
-            }
-        }
-        public override int StrikePoints
-        {
-            get { return _strpts; }
-            set
-            {
-                if (_strpts != value)
-                {
-                    _strpts = value;
-                    OnPropertyChanged("StrikePoints");
-                }
-            }
-        }
+
         public bool HasTheKey { get; set; }
 
         public Hero(int dice)

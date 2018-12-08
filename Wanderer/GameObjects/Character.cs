@@ -12,8 +12,8 @@ namespace Wanderer.GameObjects
     {
         public int Level { get; set; }
         public abstract int CurrentHealthPoints { get; set; }
-        public abstract int DefendPoints { get; set; }
-        public abstract int StrikePoints { get; set; }
+        public int DefendPoints { get; set; }
+        public int StrikePoints { get; set; }
         public int PositionX { get; set; }
         public int PositionY { get; set; }
         public Image Picture { get; set; }

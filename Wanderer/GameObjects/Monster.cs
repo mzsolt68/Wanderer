@@ -12,8 +12,6 @@ namespace Wanderer.GameObjects
     public class Monster : Enemy
     {
         private int _currhealthpts;
-        private int _defpts;
-        private int _strpts;
         public event PropertyChangedEventHandler PropertyChanged;
 
         public override int CurrentHealthPoints
@@ -25,30 +23,6 @@ namespace Wanderer.GameObjects
                 {
                     _currhealthpts = value;
                     OnPropertyChanged("CurrentHealthPoints");
-                }
-            }
-        }
-        public override int DefendPoints
-        {
-            get { return _defpts; }
-            set
-            {
-                if (_defpts != value)
-                {
-                    _defpts = value;
-                    OnPropertyChanged("DefendPoints");
-                }
-            }
-        }
-        public override int StrikePoints
-        {
-            get { return _strpts; }
-            set
-            {
-                if (_strpts != value)
-                {
-                    _strpts = value;
-                    OnPropertyChanged("StrikePoints");
                 }
             }
         }
