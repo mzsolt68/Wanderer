@@ -9,6 +9,7 @@ namespace Wanderer.GameObjects
 
         public event PropertyChangedEventHandler EnemyDied;
 
+        public Direction Direction { get; set; } = Direction.Left;
         public override int CurrentHealthPoints
         {
             get { return _currhealthpts; }

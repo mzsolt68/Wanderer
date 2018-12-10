@@ -5,7 +5,7 @@ using System.Windows.Media.Imaging;
 
 namespace Wanderer.GameObjects
 {
-    public enum Direction : int { Left, Right, Up, Down }
+    public enum Direction : int { Left, Up, Right, Down }
 
     public class Hero : Character
     {
