@@ -10,8 +10,7 @@ namespace Wanderer.GameObjects
             //Itt kell megvalósítani az ellenfelek mozgását
             foreach (var enemy in Enemies)
             {
-                Direction enemyDirection = (Direction)random.Next(Enum.GetNames(typeof(Direction)).Length);
-                MoveCharacter(enemy, enemyDirection);
+                MoveCharacter(enemy, enemy.Direction);
             }
         }
 
