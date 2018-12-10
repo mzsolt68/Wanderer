@@ -161,14 +161,11 @@ namespace Wanderer.GameObjects
         {
             if(character.GetType().Equals(typeof(Hero)))
             {
-                if (CharacterStatModel.Enemy == null)
-                {
-                    Area[character.PositionX, character.PositionY].HeroOnIt = false;
-                }
-                else
+                if (CharacterStatModel.Enemy != null)
                 {
                     CharacterStatModel.Enemy = null;
                 }
+                Area[character.PositionX, character.PositionY].HeroOnIt = false;
             }
             else
             {
@@ -190,6 +187,12 @@ namespace Wanderer.GameObjects
             {
                 Area[character.PositionX, character.PositionY].EnemyOnIt = character as Enemy;
             }
+        }
+
+        private void ChangeEnemyDirection(Enemy enemy)
+        {
+            int newDirection = ((int)enemy.Direction++) % 4;
+            enemy.Direction = (Direction)newDirection;
         }
     }
 }
