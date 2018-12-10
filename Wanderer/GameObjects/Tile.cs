@@ -19,7 +19,6 @@ namespace Wanderer.GameObjects
             {
                 return HeroOnIt || (EnemyOnIt != null);
             }
-            //private set;
         }
 
         public Tile(TileType type)
