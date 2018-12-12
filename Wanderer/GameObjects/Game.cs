@@ -120,9 +120,12 @@ namespace Wanderer.GameObjects
                 dice = random.Next(1, 7);
                 strikeValue = dice * 2 + attacker.StrikePoints;
                 defender.TakeAStrike(strikeValue);
-                var tmp = attacker;
-                attacker = defender;
-                defender = tmp;
+                if (defender.CurrentHealthPoints > 0)
+                {
+                    var tmp = attacker;
+                    attacker = defender;
+                    defender = tmp;
+                }
             } while (attacker.CurrentHealthPoints > 0 && defender.CurrentHealthPoints > 0);
         }
 
