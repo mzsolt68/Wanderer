@@ -13,8 +13,8 @@
             <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="120" />
-            <ColumnDefinition Width="168" />
+            <ColumnDefinition Width="110" />
+            <ColumnDefinition Width="178" />
             <ColumnDefinition Width="144" />
             <ColumnDefinition Width="144" />
             <ColumnDefinition Width="144" />

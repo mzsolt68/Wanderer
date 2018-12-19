@@ -1,6 +1,8 @@
 ﻿using System.ComponentModel;
+using System.Threading;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 using Wanderer.GameObjects;
 
 namespace Wanderer
@@ -47,6 +49,7 @@ namespace Wanderer
 
         private void EndGame(object sender, PropertyChangedEventArgs e)
         {
+            Thread.Sleep(3000);
             this.Close();
         }
 

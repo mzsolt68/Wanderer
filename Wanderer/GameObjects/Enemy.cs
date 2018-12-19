@@ -17,7 +17,7 @@ namespace Wanderer.GameObjects
             {
                 if (_currhealthpts != value)
                 {
-                    _currhealthpts = value;
+                    _currhealthpts = (value < 0 ? 0 : value);
                     OnPropertyChanged("CurrentHealthPoints");
                     if(_currhealthpts <= 0)
                     {
