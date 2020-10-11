@@ -3,6 +3,7 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using Wanderer.GameCharacters;
 using Wanderer.GameObjects;
 
 namespace Wanderer

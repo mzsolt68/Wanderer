@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using Wanderer.GameCharacters;
 
 namespace Wanderer.GameObjects
 {

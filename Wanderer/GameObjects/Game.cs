@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Controls;
+using Wanderer.GameCharacters;
 
 namespace Wanderer.GameObjects
 {
     public partial class Game
     {
         public Tile[,] Area { get; set; }
-        private Canvas _canvas;
-        private byte[,] _firstmap = new byte[,]
+        private readonly Canvas _canvas;
+        private readonly byte[,] _firstmap = new byte[,]
         {
             {1, 1, 1, 0, 1, 0, 1, 1, 1, 1 },
             {1, 1, 1, 0, 1, 0, 1, 0, 0, 1 },
