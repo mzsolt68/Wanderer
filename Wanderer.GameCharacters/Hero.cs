@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 
-namespace Wanderer.GameObjects
+namespace Wanderer.GameCharacters
 {
     public enum Direction : int { Left, Up, Right, Down }
 
@@ -13,7 +13,7 @@ namespace Wanderer.GameObjects
         private int _maxhealthpts;
         private int _steps;
         private bool _hasthekey;
-        private int[] _heroLevelupHealthPoints = { 10, 33, 100, 10, 33, 10, 33, 10, 10, 33 };
+        private readonly int[] _heroLevelupHealthPoints = { 10, 33, 100, 10, 33, 10, 33, 10, 10, 33 };
         public event PropertyChangedEventHandler SecondStep;
         public event PropertyChangedEventHandler HeroDied;
         public event PropertyChangedEventHandler GotTheKey;
@@ -52,6 +52,7 @@ namespace Wanderer.GameObjects
                 }
             }
         }
+
         public int MaxHealthPoints
         {
             get { return _maxhealthpts; }

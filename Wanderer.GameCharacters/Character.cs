@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Windows.Controls;
 
-namespace Wanderer.GameObjects
+namespace Wanderer.GameCharacters
 {
     public abstract class Character : INotifyPropertyChanged
     {
@@ -43,7 +43,7 @@ namespace Wanderer.GameObjects
         {
             if (strikeValue > DefendPoints)
             {
-                CurrentHealthPoints = CurrentHealthPoints - (strikeValue - DefendPoints);
+                CurrentHealthPoints -= (strikeValue - DefendPoints);
             }
         }
     }

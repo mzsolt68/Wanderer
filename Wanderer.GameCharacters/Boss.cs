@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 
-namespace Wanderer.GameObjects
+namespace Wanderer.GameCharacters
 {
     public class Boss : Enemy
     {

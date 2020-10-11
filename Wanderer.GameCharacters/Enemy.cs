@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Wanderer.GameObjects
+namespace Wanderer.GameCharacters
 {
     public abstract class Enemy : Character
     {

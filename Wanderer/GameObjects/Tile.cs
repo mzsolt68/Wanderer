@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using Wanderer.GameCharacters;
 
 namespace Wanderer.GameObjects
 {

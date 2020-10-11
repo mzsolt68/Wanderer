@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28010.2048
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30523.141
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wanderer", "Wanderer\Wanderer.csproj", "{1BD01C91-FD19-41AE-8C60-DB98CEEFCF7D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wanderer.GameCharacters", "Wanderer.GameCharacters\Wanderer.GameCharacters.csproj", "{2B4863A6-2E8D-4895-B1B4-01A1E5CC626C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{1BD01C91-FD19-41AE-8C60-DB98CEEFCF7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1BD01C91-FD19-41AE-8C60-DB98CEEFCF7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1BD01C91-FD19-41AE-8C60-DB98CEEFCF7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B4863A6-2E8D-4895-B1B4-01A1E5CC626C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B4863A6-2E8D-4895-B1B4-01A1E5CC626C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B4863A6-2E8D-4895-B1B4-01A1E5CC626C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B4863A6-2E8D-4895-B1B4-01A1E5CC626C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

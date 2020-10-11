@@ -8,12 +8,13 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>Wanderer</RootNamespace>
     <AssemblyName>Wanderer</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -55,12 +56,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="GameObjects\Boss.cs" />
-    <Compile Include="GameObjects\Enemy.cs" />
     <Compile Include="GameObjects\Game.cs" />
     <Compile Include="GameObjects\Game.EventHandlers.cs" />
     <Compile Include="GameObjects\Game.Initializations.cs" />
-    <Compile Include="GameObjects\Monster.cs" />
     <Compile Include="GameObjects\Tile.cs" />
     <Compile Include="ViewModel.cs" />
     <Page Include="MainWindow.xaml">
@@ -71,8 +69,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="GameObjects\Character.cs" />
-    <Compile Include="GameObjects\Hero.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -142,6 +138,12 @@
     <Resource Include="Images\gif\hero-up.gif" />
     <Resource Include="Images\gif\skeleton.gif" />
     <Resource Include="Images\gif\wall.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Wanderer.GameCharacters\Wanderer.GameCharacters.csproj">
+      <Project>{2b4863a6-2e8d-4895-b1b4-01a1e5cc626c}</Project>
+      <Name>Wanderer.GameCharacters</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
