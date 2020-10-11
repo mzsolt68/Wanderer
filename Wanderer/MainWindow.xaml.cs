@@ -13,7 +13,7 @@ namespace Wanderer
     /// </summary>
     public partial class MainWindow : Window
     {
-        Game game;
+        readonly Game game;
 
         public MainWindow()
         {

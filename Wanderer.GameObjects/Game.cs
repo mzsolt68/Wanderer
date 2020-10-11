@@ -35,8 +35,10 @@ namespace Wanderer.GameObjects
             GameLevel = 1;
             random = new Random();
             Enemies = new List<Enemy>();
-            CharacterStatModel = new ViewModel();
-            CharacterStatModel.Game = this;
+            CharacterStatModel = new ViewModel
+            {
+                Game = this
+            };
             InitArea();
             DrawArea();
             CreateEnemies();
@@ -162,11 +164,6 @@ namespace Wanderer.GameObjects
             }
             character.PositionX = x;
             character.PositionY = y;
-        }
-
-        private bool NewPositionIsFloor(int x, int y)
-        {
-            return Area[x, y].Type == TileType.Floor;
         }
 
         private void LeaveCell(Character character)

@@ -18,7 +18,7 @@ namespace Wanderer.GameObjects
         private void EnemyDied(object sender, PropertyChangedEventArgs e)
         {
             var enemy = sender as Enemy;
-            Hero.HasTheKey = enemy.GetType().Equals(typeof(Monster)) ? (enemy as Monster).HasTheKey : false;
+            Hero.HasTheKey = enemy.GetType().Equals(typeof(Monster)) && (enemy as Monster).HasTheKey;
             Area[enemy.PositionX, enemy.PositionY].EnemyOnIt = null;
             Enemies.Remove(enemy);
             _canvas.Children.Remove(enemy.Picture);
