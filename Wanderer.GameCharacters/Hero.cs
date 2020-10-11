@@ -39,13 +39,13 @@ namespace Wanderer.GameCharacters
             {
                 if (_currhealthpts != value)
                 {
-                    _currhealthpts = value;
+                    _currhealthpts = (value < 0 ? 0 : value);
                     if (value > MaxHealthPoints)
                     {
                         MaxHealthPoints = value;
                     }
                     OnPropertyChanged("CurrentHealthPoints");
-                    if(_currhealthpts <= 0)
+                    if(_currhealthpts == 0)
                     {
                         HeroDied(this, new PropertyChangedEventArgs("CurrentHealthPoints"));
                     }

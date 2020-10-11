@@ -62,45 +62,53 @@ namespace Wanderer.GameObjects
 
         public void MoveCharacter(Character character, Direction direction)
         {
-            if (character.GetType().Equals(typeof(Hero)))
-            {
-                (character as Hero).SetDirection(direction);
-            }
-            switch (direction)
+            Tile nextCell = null;
+            switch(direction)
             {
                 case Direction.Up:
-                    if (character.PositionY > 0 && NewPositionIsFloor(character.PositionX, character.PositionY - 1))
+                    if(character.PositionY > 0)
                     {
-                        LeaveCell(character);
-                        character.PositionY--;
-                        EnterCell(character);
+                        nextCell = Area[character.PositionX, character.PositionY - 1];
                     }
                     break;
                 case Direction.Down:
-                    if (character.PositionY < 9 && NewPositionIsFloor(character.PositionX, character.PositionY + 1))
+                    if (character.PositionY < 9)
                     {
-                        LeaveCell(character);
-                        character.PositionY++;
-                        EnterCell(character);
+                        nextCell = Area[character.PositionX, character.PositionY + 1];
                     }
                     break;
                 case Direction.Left:
-                    if (character.PositionX > 0 && NewPositionIsFloor(character.PositionX - 1, character.PositionY))
+                    if (character.PositionX > 0)
                     {
-                        LeaveCell(character);
-                        character.PositionX--;
-                        EnterCell(character);
+                        nextCell = Area[character.PositionX - 1, character.PositionY];
                     }
                     break;
                 case Direction.Right:
-                    if (character.PositionX < 9 && NewPositionIsFloor(character.PositionX + 1, character.PositionY))
+                    if (character.PositionX < 9)
                     {
-                        LeaveCell(character);
-                        character.PositionX++;
-                        EnterCell(character);
+                        nextCell = Area[character.PositionX + 1, character.PositionY];
                     }
                     break;
             }
+                if (character.GetType().Equals(typeof(Hero)))
+                {
+                    if (nextCell != null && nextCell.Type == TileType.Floor)
+                    {
+                        (character as Hero).SetDirection(direction);
+                        StepCharacter(character, direction);
+                    }
+                }
+                else
+                {
+                    if (nextCell != null && nextCell.Type == TileType.Floor && nextCell.EnemyOnIt == null)
+                    {
+                        StepCharacter(character, direction);
+                    }
+                    else
+                    {
+                        ChangeEnemyDirection((Enemy)character);
+                    }
+                }
         }
 
         public void StartBattle(Character attacker, Character defender)
@@ -112,9 +120,12 @@ namespace Wanderer.GameObjects
                 dice = random.Next(1, 7);
                 strikeValue = dice * 2 + attacker.StrikePoints;
                 defender.TakeAStrike(strikeValue);
-                var tmp = attacker;
-                attacker = defender;
-                defender = tmp;
+                if (defender.CurrentHealthPoints > 0)
+                {
+                    var tmp = attacker;
+                    attacker = defender;
+                    defender = tmp;
+                }
             } while (attacker.CurrentHealthPoints > 0 && defender.CurrentHealthPoints > 0);
         }
 
@@ -191,8 +202,35 @@ namespace Wanderer.GameObjects
 
         private void ChangeEnemyDirection(Enemy enemy)
         {
-            int newDirection = ((int)enemy.Direction++) % 4;
+            int newDirection = (((int)enemy.Direction) + 1) % 4;
             enemy.Direction = (Direction)newDirection;
+        }
+
+        private void StepCharacter(Character character, Direction direction)
+        {
+            switch (direction)
+            {
+                case Direction.Up:
+                    LeaveCell(character);
+                    character.PositionY--;
+                    EnterCell(character);
+                    break;
+                case Direction.Down:
+                    LeaveCell(character);
+                    character.PositionY++;
+                    EnterCell(character);
+                    break;
+                case Direction.Left:
+                    LeaveCell(character);
+                    character.PositionX--;
+                    EnterCell(character);
+                    break;
+                case Direction.Right:
+                    LeaveCell(character);
+                    character.PositionX++;
+                    EnterCell(character);
+                    break;
+            }
         }
     }
 }
