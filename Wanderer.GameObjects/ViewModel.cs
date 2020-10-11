@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Wanderer.GameCharacters;
 using Wanderer.GameObjects;
 
-namespace Wanderer
+namespace Wanderer.GameObjects
 {
     public class ViewModel : INotifyPropertyChanged
     {

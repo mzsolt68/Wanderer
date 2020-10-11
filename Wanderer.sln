@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wanderer", "Wanderer\Wander
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wanderer.GameCharacters", "Wanderer.GameCharacters\Wanderer.GameCharacters.csproj", "{2B4863A6-2E8D-4895-B1B4-01A1E5CC626C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wanderer.GameObjects", "Wanderer.GameObjects\Wanderer.GameObjects.csproj", "{FADEABA5-924A-4665-A5EC-6F52C74E386F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{2B4863A6-2E8D-4895-B1B4-01A1E5CC626C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B4863A6-2E8D-4895-B1B4-01A1E5CC626C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2B4863A6-2E8D-4895-B1B4-01A1E5CC626C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FADEABA5-924A-4665-A5EC-6F52C74E386F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FADEABA5-924A-4665-A5EC-6F52C74E386F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FADEABA5-924A-4665-A5EC-6F52C74E386F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FADEABA5-924A-4665-A5EC-6F52C74E386F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

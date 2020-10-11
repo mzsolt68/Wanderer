@@ -56,11 +56,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="GameObjects\Game.cs" />
-    <Compile Include="GameObjects\Game.EventHandlers.cs" />
-    <Compile Include="GameObjects\Game.Initializations.cs" />
-    <Compile Include="GameObjects\Tile.cs" />
-    <Compile Include="ViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -144,6 +139,13 @@
       <Project>{2b4863a6-2e8d-4895-b1b4-01a1e5cc626c}</Project>
       <Name>Wanderer.GameCharacters</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Wanderer.GameObjects\Wanderer.GameObjects.csproj">
+      <Project>{fadeaba5-924a-4665-a5ec-6f52c74e386f}</Project>
+      <Name>Wanderer.GameObjects</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="GameObjects\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
