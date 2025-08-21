@@ -12,12 +12,6 @@ namespace Wanderer.GameCharacters
             CurrentHealthPoints = 2 * Level * dice + dice;
             DefendPoints = (int)(Level / 2.0 * dice + dice / 2.0);
             StrikePoints = Level * dice + Level;
-            Picture = new Image
-            {
-                Width = 72,
-                Height = 72
-            };
-            Picture.Source = new BitmapImage(new Uri("../Images/boss.png", UriKind.Relative));
         }
     }
 }

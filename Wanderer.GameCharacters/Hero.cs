@@ -86,32 +86,6 @@ namespace Wanderer.GameCharacters
             DefendPoints = 2 * dice;
             StrikePoints = 5 * dice;
             HasTheKey = false;
-            Picture = new Image
-            {
-                Width = 72,
-                Height = 72
-            };
-            SetDirection(Direction.Down);
-        }
-
-        public void SetDirection(Direction direction)
-        {
-            switch (direction)
-            {
-                case Direction.Left:
-                    Picture.Source = new BitmapImage(new Uri("../Images/hero-left.png", UriKind.Relative));
-                    break;
-                case Direction.Right:
-                    Picture.Source = new BitmapImage(new Uri("../Images/hero-right.png", UriKind.Relative));
-                    break;
-                case Direction.Up:
-                    Picture.Source = new BitmapImage(new Uri("../Images/hero-up.png", UriKind.Relative));
-                    break;
-                case Direction.Down:
-                    Picture.Source = new BitmapImage(new Uri("../Images/hero-down.png", UriKind.Relative));
-                    break;
-
-            }
         }
 
         public void LevelUp(int dice)

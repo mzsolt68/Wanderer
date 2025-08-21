@@ -26,7 +26,6 @@ namespace Wanderer.GameCharacters
         public int StrikePoints { get; set; }
         public int PositionX { get; set; }
         public int PositionY { get; set; }
-        public Image Picture { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
