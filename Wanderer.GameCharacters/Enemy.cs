@@ -21,7 +21,7 @@ namespace Wanderer.GameCharacters
                     OnPropertyChanged("CurrentHealthPoints");
                     if(_currhealthpts <= 0)
                     {
-                        EnemyDied(this, new System.ComponentModel.PropertyChangedEventArgs("CurrentHealthPoints"));
+                        EnemyDied?.Invoke(this, new System.ComponentModel.PropertyChangedEventArgs("CurrentHealthPoints"));
                     }
                 }
             }

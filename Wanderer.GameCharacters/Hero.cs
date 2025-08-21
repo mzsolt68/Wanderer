@@ -27,7 +27,7 @@ namespace Wanderer.GameCharacters
                     _steps = value;
                     if (_steps > 0 && _steps % 2 == 0)
                     {
-                        SecondStep(this, new PropertyChangedEventArgs("Steps"));
+                        SecondStep?.Invoke(this, new PropertyChangedEventArgs("Steps"));
                     }
                 }
             }
@@ -47,7 +47,7 @@ namespace Wanderer.GameCharacters
                     OnPropertyChanged("CurrentHealthPoints");
                     if(_currhealthpts == 0)
                     {
-                        HeroDied(this, new PropertyChangedEventArgs("CurrentHealthPoints"));
+                        HeroDied?.Invoke(this, new PropertyChangedEventArgs("CurrentHealthPoints"));
                     }
                 }
             }
@@ -66,14 +66,14 @@ namespace Wanderer.GameCharacters
             }
         }
 
-        public bool HasTheKey {
-            //get;
+        public bool HasTheKey
+        {
             set
             {
                 if(_hasthekey != value)
                 {
                     _hasthekey = value;
-                    GotTheKey(this, new PropertyChangedEventArgs("HasTheKey"));
+                    GotTheKey?.Invoke(this, new PropertyChangedEventArgs("HasTheKey"));
                 }
             }
         }
