@@ -10,7 +10,6 @@ namespace Wanderer.GameObjects
     public class Tile
     {
         public TileType Type { get; private set; }
-        public Image Picture { get; private set; }
         public int Width { get; private set; }
         public int Height { get; private set; }
         public bool HeroOnIt { get; set; }
@@ -27,16 +26,6 @@ namespace Wanderer.GameObjects
             Type = type;
             Width = 72;
             Height = 72;
-            Picture = new Image();
-
-            if (this.Type == TileType.Floor)
-            {
-                Picture.Source = new BitmapImage(new Uri("../Images/floor.png", UriKind.Relative));
-            }
-            else
-            {
-                Picture.Source = new BitmapImage(new Uri("../Images/wall.png", UriKind.Relative));
-            }
         }
     }
 }

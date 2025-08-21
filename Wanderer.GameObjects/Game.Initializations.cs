@@ -15,11 +15,6 @@ namespace Wanderer.GameObjects
                     Area[x, y] = new Tile(_firstmap[x, y] == 0 ? TileType.Wall : TileType.Floor);
                 }
         }
-        private void DrawArea()
-        {
-            // No-op: area is rendered by the renderer in Game constructor now.
-            _renderer.RenderArea(Area);
-        }
 
         private T Spawn<T>(T character) where T : Character
         {

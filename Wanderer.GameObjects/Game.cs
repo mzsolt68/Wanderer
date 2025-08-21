@@ -25,7 +25,7 @@ namespace Wanderer.GameObjects
         };
         private static Random random;
         private readonly ICharacterFactory _factory;
-        private readonly IGameRenderer _renderer; // NEW
+        private readonly IGameRenderer _renderer;
 
         public int GameLevel { get; private set; }
         public Hero Hero;
@@ -39,12 +39,12 @@ namespace Wanderer.GameObjects
             GameLevel = 1;
             random = new Random();
             _factory = new CharacterFactory(random);
-            _renderer = new WpfGameRenderer(_canvas); // NEW
+            _renderer = new WpfGameRenderer(_canvas);
             Enemies = new List<Enemy>();
             CharacterStatModel = new ViewModel { Game = this };
 
             InitArea();
-            _renderer.RenderArea(Area); // NEW: was DrawArea()
+            _renderer.RenderArea(Area);
             CreateEnemies();
             CreateHero();
         }
@@ -56,12 +56,11 @@ namespace Wanderer.GameObjects
             Hero.GoNextField(random.Next(0, 10));
             ClearArea();
             CreateEnemies();
-            _renderer.Spawn(Hero);             // NEW: was _canvas.Children.Add(Hero.Picture)
-            _renderer.UpdatePosition(Hero);    // NEW: was DrawCharacter(Hero)
+            _renderer.Spawn(Hero);
+            _renderer.UpdatePosition(Hero);
             Hero.HasTheKey = false;
         }
 
-        // Replaces DrawCharacter: delegate to renderer
         private void DrawCharacter(Character character)
         {
             _renderer.UpdatePosition(character);
@@ -90,7 +89,7 @@ namespace Wanderer.GameObjects
             {
                 if (nextCell != null && nextCell.Type == TileType.Floor)
                 {
-                    _renderer.SetFacing((Hero)character, direction); // NEW: renderer handles visuals
+                    _renderer.SetFacing((Hero)character, direction);
                     StepCharacter(character, direction);
                 }
             }
@@ -129,11 +128,11 @@ namespace Wanderer.GameObjects
         {
             foreach (var item in Enemies)
             {
-                _renderer.Remove(item); // NEW
+                _renderer.Remove(item);
                 Area[item.PositionX, item.PositionY].EnemyOnIt = null;
             }
             Enemies.Clear();
-            _renderer.Remove(Hero); // NEW
+            _renderer.Remove(Hero);
         }
 
         private void SetCoord(Character character)
