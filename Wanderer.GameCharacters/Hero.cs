@@ -1,7 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-using System.Windows.Controls;
-using System.Windows.Media.Imaging;
+﻿using System.ComponentModel;
 
 namespace Wanderer.GameCharacters
 {

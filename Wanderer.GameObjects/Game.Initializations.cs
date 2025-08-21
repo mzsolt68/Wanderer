@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Windows.Controls;
-using Wanderer.GameCharacters;
-using Wanderer.GameObjects.Rendering;
+﻿using Wanderer.GameCharacters;
 
 namespace Wanderer.GameObjects
 {
