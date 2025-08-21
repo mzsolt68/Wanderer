@@ -61,11 +61,6 @@ namespace Wanderer.GameObjects
             Hero.HasTheKey = false;
         }
 
-        private void DrawCharacter(Character character)
-        {
-            _renderer.UpdatePosition(character);
-        }
-
         public void MoveCharacter(Character character, Direction direction)
         {
             Tile nextCell = null;
@@ -178,7 +173,7 @@ namespace Wanderer.GameObjects
 
         private void EnterCell(Character character)
         {
-            DrawCharacter(character);
+            _renderer.UpdatePosition(character);
             if (character.GetType().Equals(typeof(Hero)))
             {
                 Hero.Steps++;
