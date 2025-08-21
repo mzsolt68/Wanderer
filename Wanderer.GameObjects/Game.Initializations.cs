@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Collections.Generic;
+using System.Windows.Controls;
 using Wanderer.GameCharacters;
 
 namespace Wanderer.GameObjects
@@ -30,6 +31,24 @@ namespace Wanderer.GameObjects
             }
         }
 
+        private int RollDice()
+        {
+            return random.Next(1, 7);
+        }
+
+        private int RollEnemyLevel()
+        {
+            return random.Next(1, 10);
+        }
+
+        private T Spawn<T>(T character) where T : Character
+        {
+            SetCoord(character);
+            _canvas.Children.Add(character.Picture);
+            DrawCharacter(character);
+            return character;
+        }
+
         private void CreateEnemies()
         {
             CreateMonsters();
@@ -38,10 +57,7 @@ namespace Wanderer.GameObjects
 
         private void CreateHero()
         {
-            this.Hero = new Hero(random.Next(1, 7));
-            SetCoord(Hero);
-            _canvas.Children.Add(Hero.Picture);
-            DrawCharacter(Hero);
+            this.Hero = Spawn(new Hero(RollDice()));
             CharacterStatModel.Hero = Hero;
             Hero.SecondStep += MoveEnemies;
             Hero.GotTheKey += HeroHasTheKey;
@@ -50,28 +66,21 @@ namespace Wanderer.GameObjects
         private void CreateMonsters()
         {
             int nrOfMonsters = random.Next(2, 6);
-            int dice;
-            do
+            List<Monster> createdMonsters = new List<Monster>(nrOfMonsters);
+            for (int i = 0; i < nrOfMonsters; i++)
             {
-                Monster m = new Monster(GameLevel, random.Next(0, 10), random.Next(1, 7));
+                Monster m = Spawn(new Monster(GameLevel, RollEnemyLevel(), RollDice()));
                 m.EnemyDied += EnemyDied;
-                SetCoord(m);
-                _canvas.Children.Add(m.Picture);
-                DrawCharacter(m);
                 Enemies.Add(m);
-                nrOfMonsters--;
-            } while (nrOfMonsters > 0);
-            dice = random.Next(0, Enemies.Count);
-            (Enemies[dice] as Monster).HasTheKey = true;
+                createdMonsters.Add(m);
+            }
+            createdMonsters[random.Next(0, createdMonsters.Count)].HasTheKey = true;
         }
 
         private void CreateBoss()
         {
-            Boss b = new Boss(GameLevel, random.Next(0, 10), random.Next(1, 7));
+            Boss b = Spawn(new Boss(GameLevel, RollEnemyLevel(), RollDice()));
             b.EnemyDied += EnemyDied;
-            SetCoord(b);
-            _canvas.Children.Add(b.Picture);
-            DrawCharacter(b);
             Enemies.Add(b);
         }
     }
