@@ -31,16 +31,6 @@ namespace Wanderer.GameObjects
             }
         }
 
-        private int RollDice()
-        {
-            return random.Next(1, 7);
-        }
-
-        private int RollEnemyLevel()
-        {
-            return random.Next(1, 10);
-        }
-
         private T Spawn<T>(T character) where T : Character
         {
             SetCoord(character);
@@ -57,7 +47,7 @@ namespace Wanderer.GameObjects
 
         private void CreateHero()
         {
-            this.Hero = Spawn(new Hero(RollDice()));
+            this.Hero = Spawn(_factory.CreateHero());
             CharacterStatModel.Hero = Hero;
             Hero.SecondStep += MoveEnemies;
             Hero.GotTheKey += HeroHasTheKey;
@@ -65,22 +55,20 @@ namespace Wanderer.GameObjects
 
         private void CreateMonsters()
         {
-            int nrOfMonsters = random.Next(2, 6);
-            List<Monster> createdMonsters = new List<Monster>(nrOfMonsters);
-            for (int i = 0; i < nrOfMonsters; i++)
+            var monsters = _factory.CreateMonsters(GameLevel, 2, 5); // [2..5] monsters, one has the key
+            foreach (var m in monsters)
             {
-                Monster m = Spawn(new Monster(GameLevel, RollEnemyLevel(), RollDice()));
                 m.EnemyDied += EnemyDied;
+                Spawn(m);
                 Enemies.Add(m);
-                createdMonsters.Add(m);
             }
-            createdMonsters[random.Next(0, createdMonsters.Count)].HasTheKey = true;
         }
 
         private void CreateBoss()
         {
-            Boss b = Spawn(new Boss(GameLevel, RollEnemyLevel(), RollDice()));
+            Boss b = _factory.CreateBoss(GameLevel);
             b.EnemyDied += EnemyDied;
+            Spawn(b);
             Enemies.Add(b);
         }
     }

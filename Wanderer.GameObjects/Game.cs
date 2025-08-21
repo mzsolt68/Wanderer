@@ -23,6 +23,7 @@ namespace Wanderer.GameObjects
             {1, 1, 1, 0, 1, 0, 0, 1, 0, 0 }
         };
         private static Random random;
+        private readonly ICharacterFactory _factory;
         public int GameLevel { get; private set; }
         public Hero Hero;
         public List<Enemy> Enemies;
@@ -34,6 +35,7 @@ namespace Wanderer.GameObjects
             Area = new Tile[10, 10];
             GameLevel = 1;
             random = new Random();
+            _factory = new CharacterFactory(random);
             Enemies = new List<Enemy>();
             CharacterStatModel = new ViewModel
             {
