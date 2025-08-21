@@ -49,6 +49,8 @@
     <Compile Include="Game.EventHandlers.cs" />
     <Compile Include="Game.Initializations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rendering\IGameRenderer.cs" />
+    <Compile Include="Rendering\WpfGameRenderer.cs" />
     <Compile Include="Tile.cs" />
     <Compile Include="ViewModel.cs" />
   </ItemGroup>

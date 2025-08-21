@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Controls;
 using Wanderer.GameCharacters;
+using Wanderer.GameObjects.Rendering;
 
 namespace Wanderer.GameObjects
 {
@@ -24,6 +25,8 @@ namespace Wanderer.GameObjects
         };
         private static Random random;
         private readonly ICharacterFactory _factory;
+        private readonly IGameRenderer _renderer; // NEW
+
         public int GameLevel { get; private set; }
         public Hero Hero;
         public List<Enemy> Enemies;
@@ -36,13 +39,12 @@ namespace Wanderer.GameObjects
             GameLevel = 1;
             random = new Random();
             _factory = new CharacterFactory(random);
+            _renderer = new WpfGameRenderer(_canvas); // NEW
             Enemies = new List<Enemy>();
-            CharacterStatModel = new ViewModel
-            {
-                Game = this
-            };
+            CharacterStatModel = new ViewModel { Game = this };
+
             InitArea();
-            DrawArea();
+            _renderer.RenderArea(Area); // NEW: was DrawArea()
             CreateEnemies();
             CreateHero();
         }
@@ -54,15 +56,15 @@ namespace Wanderer.GameObjects
             Hero.GoNextField(random.Next(0, 10));
             ClearArea();
             CreateEnemies();
-            _canvas.Children.Add(Hero.Picture);
-            DrawCharacter(Hero);
+            _renderer.Spawn(Hero);             // NEW: was _canvas.Children.Add(Hero.Picture)
+            _renderer.UpdatePosition(Hero);    // NEW: was DrawCharacter(Hero)
             Hero.HasTheKey = false;
         }
 
+        // Replaces DrawCharacter: delegate to renderer
         private void DrawCharacter(Character character)
         {
-            Canvas.SetLeft(character.Picture, character.PositionX * 72);
-            Canvas.SetTop(character.Picture, character.PositionY * 72);
+            _renderer.UpdatePosition(character);
         }
 
         public void MoveCharacter(Character character, Direction direction)
@@ -71,49 +73,38 @@ namespace Wanderer.GameObjects
             switch(direction)
             {
                 case Direction.Up:
-                    if(character.PositionY > 0)
-                    {
-                        nextCell = Area[character.PositionX, character.PositionY - 1];
-                    }
+                    if(character.PositionY > 0) nextCell = Area[character.PositionX, character.PositionY - 1];
                     break;
                 case Direction.Down:
-                    if (character.PositionY < 9)
-                    {
-                        nextCell = Area[character.PositionX, character.PositionY + 1];
-                    }
+                    if (character.PositionY < 9) nextCell = Area[character.PositionX, character.PositionY + 1];
                     break;
                 case Direction.Left:
-                    if (character.PositionX > 0)
-                    {
-                        nextCell = Area[character.PositionX - 1, character.PositionY];
-                    }
+                    if (character.PositionX > 0) nextCell = Area[character.PositionX - 1, character.PositionY];
                     break;
                 case Direction.Right:
-                    if (character.PositionX < 9)
-                    {
-                        nextCell = Area[character.PositionX + 1, character.PositionY];
-                    }
+                    if (character.PositionX < 9) nextCell = Area[character.PositionX + 1, character.PositionY];
                     break;
             }
-                if (character.GetType().Equals(typeof(Hero)))
+
+            if (character.GetType().Equals(typeof(Hero)))
+            {
+                if (nextCell != null && nextCell.Type == TileType.Floor)
                 {
-                    if (nextCell != null && nextCell.Type == TileType.Floor)
-                    {
-                        (character as Hero).SetDirection(direction);
-                        StepCharacter(character, direction);
-                    }
+                    _renderer.SetFacing((Hero)character, direction); // NEW: renderer handles visuals
+                    StepCharacter(character, direction);
+                }
+            }
+            else
+            {
+                if (nextCell != null && nextCell.Type == TileType.Floor && nextCell.EnemyOnIt == null)
+                {
+                    StepCharacter(character, direction);
                 }
                 else
                 {
-                    if (nextCell != null && nextCell.Type == TileType.Floor && nextCell.EnemyOnIt == null)
-                    {
-                        StepCharacter(character, direction);
-                    }
-                    else
-                    {
-                        ChangeEnemyDirection((Enemy)character);
-                    }
+                    ChangeEnemyDirection((Enemy)character);
                 }
+            }
         }
 
         public void StartBattle(Character attacker, Character defender)
@@ -138,11 +129,11 @@ namespace Wanderer.GameObjects
         {
             foreach (var item in Enemies)
             {
-                _canvas.Children.Remove(item.Picture);
+                _renderer.Remove(item); // NEW
                 Area[item.PositionX, item.PositionY].EnemyOnIt = null;
             }
             Enemies.Clear();
-            _canvas.Children.Remove(Hero.Picture);
+            _renderer.Remove(Hero); // NEW
         }
 
         private void SetCoord(Character character)

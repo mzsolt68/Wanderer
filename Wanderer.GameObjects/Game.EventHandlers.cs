@@ -18,11 +18,19 @@ namespace Wanderer.GameObjects
         private void EnemyDied(object sender, PropertyChangedEventArgs e)
         {
             var enemy = sender as Enemy;
-            Hero.HasTheKey = enemy.GetType().Equals(typeof(Monster)) && (enemy as Monster).HasTheKey;
+            var hasKey = enemy is Monster m && m.HasTheKey;
             Area[enemy.PositionX, enemy.PositionY].EnemyOnIt = null;
             Enemies.Remove(enemy);
-            _canvas.Children.Remove(enemy.Picture);
-            CharacterStatModel.Enemy = null;
+            enemy.EnemyDied -= EnemyDied;
+            _renderer.Remove(enemy);
+            if(CharacterStatModel.Enemy == enemy)
+            {
+                CharacterStatModel.Enemy = null;
+            }
+            if (hasKey)
+            {
+                Hero.HasTheKey = true;
+            }
             Hero.LevelUp(random.Next(1, 7));
         }
 
